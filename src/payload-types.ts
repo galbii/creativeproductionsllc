@@ -69,6 +69,10 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    'gallery-sections': GallerySection;
+    'gallery-videos': GalleryVideo;
+    'gallery-images': GalleryImage;
+    'team-members': TeamMember;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -77,12 +81,16 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    'gallery-sections': GallerySectionsSelect<false> | GallerySectionsSelect<true>;
+    'gallery-videos': GalleryVideosSelect<false> | GalleryVideosSelect<true>;
+    'gallery-images': GalleryImagesSelect<false> | GalleryImagesSelect<true>;
+    'team-members': TeamMembersSelect<false> | TeamMembersSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: number;
+    defaultIDType: string;
   };
   globals: {};
   globalsSelect: {};
@@ -118,7 +126,7 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: number;
+  id: string;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -142,7 +150,7 @@ export interface User {
  * via the `definition` "media".
  */
 export interface Media {
-  id: number;
+  id: string;
   alt: string;
   updatedAt: string;
   createdAt: string;
@@ -158,23 +166,189 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gallery-sections".
+ */
+export interface GallerySection {
+  id: string;
+  /**
+   * The title displayed for this gallery section (e.g., "Corporate Videos", "Event Highlights")
+   */
+  title: string;
+  /**
+   * URL-friendly identifier for this section
+   */
+  slug: string;
+  /**
+   * Optional description for this section
+   */
+  description?: string | null;
+  /**
+   * Type of content this section displays
+   */
+  contentType: 'video' | 'image';
+  /**
+   * Display order (lower numbers appear first)
+   */
+  order: number;
+  /**
+   * Toggle section visibility on the frontend
+   */
+  isVisible?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gallery-videos".
+ */
+export interface GalleryVideo {
+  id: string;
+  /**
+   * Title displayed below the video
+   */
+  title: string;
+  /**
+   * The gallery section this video belongs to
+   */
+  section: string | GallerySection;
+  /**
+   * Full URL from YouTube or Vimeo (e.g., https://www.youtube.com/watch?v=... or https://vimeo.com/...)
+   */
+  videoUrl: string;
+  /**
+   * Auto-detected from URL, but can be manually set
+   */
+  videoType: 'youtube' | 'vimeo';
+  /**
+   * Extracted video ID (auto-populated)
+   */
+  videoId?: string | null;
+  /**
+   * Optional custom thumbnail (if not provided, platform default will be used)
+   */
+  thumbnail?: (string | null) | Media;
+  /**
+   * Optional video description or caption
+   */
+  description?: string | null;
+  /**
+   * Featured videos are displayed larger at the top of each section
+   */
+  isFeatured?: boolean | null;
+  /**
+   * Display order within the section (lower numbers appear first)
+   */
+  order?: number | null;
+  /**
+   * Toggle video visibility
+   */
+  isVisible?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gallery-images".
+ */
+export interface GalleryImage {
+  id: string;
+  /**
+   * Title displayed for this image carousel
+   */
+  title: string;
+  /**
+   * The gallery section this image carousel belongs to
+   */
+  section: string | GallerySection;
+  /**
+   * Upload multiple images for this carousel (1-20 images)
+   */
+  images: {
+    image: string | Media;
+    /**
+     * Optional caption for this image
+     */
+    caption?: string | null;
+    /**
+     * Accessibility description (defaults to media alt if empty)
+     */
+    altText?: string | null;
+    id?: string | null;
+  }[];
+  /**
+   * Optional description for this image gallery
+   */
+  description?: string | null;
+  /**
+   * Featured image galleries are displayed larger at the top of each section
+   */
+  isFeatured?: boolean | null;
+  /**
+   * Display order within the section (lower numbers appear first)
+   */
+  order?: number | null;
+  /**
+   * Toggle gallery visibility
+   */
+  isVisible?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team-members".
+ */
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  /**
+   * A brief description of the team member
+   */
+  bio: string;
+  image: string | Media;
+  /**
+   * Lower numbers appear first
+   */
+  order: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: number;
+  id: string;
   document?:
     | ({
         relationTo: 'users';
-        value: number | User;
+        value: string | User;
       } | null)
     | ({
         relationTo: 'media';
-        value: number | Media;
+        value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'gallery-sections';
+        value: string | GallerySection;
+      } | null)
+    | ({
+        relationTo: 'gallery-videos';
+        value: string | GalleryVideo;
+      } | null)
+    | ({
+        relationTo: 'gallery-images';
+        value: string | GalleryImage;
+      } | null)
+    | ({
+        relationTo: 'team-members';
+        value: string | TeamMember;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -184,10 +358,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: number;
+  id: string;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   key?: string | null;
   value?:
@@ -207,7 +381,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: number;
+  id: string;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -252,6 +426,73 @@ export interface MediaSelect<T extends boolean = true> {
   height?: T;
   focalX?: T;
   focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gallery-sections_select".
+ */
+export interface GallerySectionsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  description?: T;
+  contentType?: T;
+  order?: T;
+  isVisible?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gallery-videos_select".
+ */
+export interface GalleryVideosSelect<T extends boolean = true> {
+  title?: T;
+  section?: T;
+  videoUrl?: T;
+  videoType?: T;
+  videoId?: T;
+  thumbnail?: T;
+  description?: T;
+  isFeatured?: T;
+  order?: T;
+  isVisible?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "gallery-images_select".
+ */
+export interface GalleryImagesSelect<T extends boolean = true> {
+  title?: T;
+  section?: T;
+  images?:
+    | T
+    | {
+        image?: T;
+        caption?: T;
+        altText?: T;
+        id?: T;
+      };
+  description?: T;
+  isFeatured?: T;
+  order?: T;
+  isVisible?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "team-members_select".
+ */
+export interface TeamMembersSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  bio?: T;
+  image?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

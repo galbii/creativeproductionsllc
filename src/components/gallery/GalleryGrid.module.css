@@ -1,0 +1,128 @@
+.gallery {
+  width: 100%;
+}
+
+.section {
+  padding: var(--section-padding-y-mobile) 0;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding: var(--section-padding-y-tablet) 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .section {
+    padding: var(--section-padding-y-desktop) 0;
+  }
+}
+
+.section:nth-child(even) {
+  background: var(--color-bg-secondary);
+}
+
+.container {
+  max-width: var(--container-xl);
+  margin: 0 auto;
+  padding-left: var(--section-padding-x-mobile);
+  padding-right: var(--section-padding-x-mobile);
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding-left: var(--section-padding-x-tablet);
+    padding-right: var(--section-padding-x-tablet);
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: var(--section-padding-x-desktop);
+    padding-right: var(--section-padding-x-desktop);
+  }
+}
+
+.sectionHeader {
+  margin-bottom: var(--space-12);
+  text-align: center;
+}
+
+.sectionHeader h2 {
+  font-size: clamp(var(--text-3xl), 4vw, var(--text-5xl));
+  margin-bottom: var(--space-4);
+}
+
+.sectionHeader p {
+  font-size: var(--text-lg);
+  color: var(--color-text-secondary);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Featured Video Grid - Significantly larger, viewport-scaled, center-aligned */
+.featuredGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(var(--space-10), 4vw, var(--space-20));
+  margin-bottom: clamp(var(--space-16), 6vw, var(--space-24));
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  justify-items: center;
+}
+
+/* Tablet and up - significantly increase size */
+@media (min-width: 768px) {
+  .featuredGrid {
+    width: 95%;
+  }
+}
+
+/* Desktop - large cinematic presentation */
+@media (min-width: 1024px) {
+  .featuredGrid {
+    width: 92%;
+  }
+}
+
+/* Large desktop - maximum impact */
+@media (min-width: 1280px) {
+  .featuredGrid {
+    width: 88%;
+  }
+}
+
+/* Extra large - ultra-wide displays */
+@media (min-width: 1536px) {
+  .featuredGrid {
+    width: 85%;
+  }
+}
+
+/* Ultra-wide displays */
+@media (min-width: 1920px) {
+  .featuredGrid {
+    width: 80%;
+    max-width: 1800px;
+  }
+}
+
+/* Regular Video Grid */
+.videoGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+}
+
+@media (min-width: 768px) {
+  .videoGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .videoGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
