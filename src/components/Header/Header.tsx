@@ -95,18 +95,6 @@ export function Header() {
             Gallery
           </Link>
           <Link
-            href="/services"
-            className="
-              font-body text-base font-medium text-stone-600 tracking-wide
-              relative transition-colors hover:text-stone-900
-              after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[1px]
-              after:bg-stone-900 after:transition-all after:duration-200
-              hover:after:w-full
-            "
-          >
-            Services
-          </Link>
-          <Link
             href="/contact"
             className="
               font-body text-base font-medium text-stone-600 tracking-wide

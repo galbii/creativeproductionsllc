@@ -56,12 +56,6 @@ export function Footer() {
                 Gallery
               </Link>
               <Link
-                href="/services"
-                className="font-body text-base text-stone-600 tracking-wide transition-colors hover:text-stone-900"
-              >
-                Services
-              </Link>
-              <Link
                 href="/contact"
                 className="font-body text-base text-stone-600 tracking-wide transition-colors hover:text-stone-900"
               >
