@@ -100,7 +100,7 @@ export const GalleryVideos: CollectionConfig = {
       },
       hooks: {
         beforeValidate: [
-          ({ value, data }: { value?: unknown; data?: Record<string, any> }) => {
+          ({ value, data }: { value?: unknown; data?: Record<string, unknown> }) => {
             // Auto-detect video type from URL
             if (data?.videoUrl && typeof data.videoUrl === 'string') {
               if (
@@ -128,7 +128,7 @@ export const GalleryVideos: CollectionConfig = {
       },
       hooks: {
         beforeValidate: [
-          ({ value, data }: { value?: unknown; data?: Record<string, any> }) => {
+          ({ value, data }: { value?: unknown; data?: Record<string, unknown> }) => {
             // Extract video ID from URL
             if (!data?.videoUrl || typeof data.videoUrl !== 'string') return value
 

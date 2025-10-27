@@ -1,7 +1,6 @@
 import React from 'react'
 import { Inter, Outfit } from 'next/font/google'
-import './styles.css'
-import '@/styles/design-system.css'
+import './globals.css'
 
 const inter = Inter({
   subsets: ['latin'],

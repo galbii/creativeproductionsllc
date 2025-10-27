@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import styles from './VideoPlayer.module.css'
 
 interface VideoPlayerProps {
   videoId: string
@@ -22,14 +21,14 @@ export function VideoPlayer({ videoId, videoType, title }: VideoPlayerProps) {
 
   if (!videoId) {
     return (
-      <div className={styles.placeholder}>
-        <p>Invalid video ID</p>
+      <div className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-stone-100 text-stone-400">
+        <p className="m-0 text-sm">Invalid video ID</p>
       </div>
     )
   }
 
   return (
-    <div className={styles.player}>
+    <div className="absolute top-0 left-0 w-full h-full">
       <iframe
         src={getEmbedUrl()}
         title={title}
@@ -37,7 +36,7 @@ export function VideoPlayer({ videoId, videoType, title }: VideoPlayerProps) {
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
         loading="lazy"
-        className={styles.iframe}
+        className="w-full h-full border-none"
       />
     </div>
   )

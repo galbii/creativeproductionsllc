@@ -1,6 +1,7 @@
 import React from 'react'
 import { Header } from '@/components/Header'
 import { HeroSection } from '@/components/HeroSection/HeroSection'
+import { OurWork } from '@/components/OurWork'
 import { ServicesSection } from '@/components/ServicesSection'
 
 export const metadata = {
@@ -18,6 +19,7 @@ export default async function HomePage() {
       <Header />
       <main>
         <HeroSection />
+        <OurWork />
         <ServicesSection />
       </main>
     </>

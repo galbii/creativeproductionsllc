@@ -5,7 +5,6 @@ import { motion } from 'framer-motion'
 import { VideoCard } from './VideoCard'
 import { ImageCard } from './ImageCard'
 import type { Media } from '@/payload-types'
-import styles from './GalleryGrid.module.css'
 
 interface Video {
   id: string | number
@@ -51,7 +50,7 @@ interface GalleryGridProps {
 
 export function GalleryGrid({ sections }: GalleryGridProps) {
   return (
-    <div className={styles.gallery}>
+    <div className="w-full">
       {sections.map((section) => {
         // Handle video sections
         if (section.contentType === 'video' && section.videos) {
@@ -59,11 +58,12 @@ export function GalleryGrid({ sections }: GalleryGridProps) {
           const regularVideos = section.videos.filter((video) => !video.isFeatured)
 
           return (
-            <section key={section.id} className={styles.section}>
-              <div className={styles.container}>
+            <section key={section.id} className="py-12 md:py-16 lg:py-24 even:bg-stone-50">
+              <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
                 {/* Section Header - Appears at top of section */}
-                <div className={styles.sectionHeader}>
+                <div className="mb-12 text-center">
                   <motion.h2
+                    className="text-3xl md:text-4xl lg:text-5xl mb-4"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.15 }}
@@ -73,6 +73,7 @@ export function GalleryGrid({ sections }: GalleryGridProps) {
                   </motion.h2>
                   {section.description && (
                     <motion.p
+                      className="text-lg text-stone-600 max-w-[700px] mx-auto"
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, amount: 0.15 }}
@@ -85,7 +86,7 @@ export function GalleryGrid({ sections }: GalleryGridProps) {
 
                 {/* Featured Videos - Displayed prominently after header */}
                 {featuredVideos.length > 0 && (
-                  <div className={styles.featuredGrid}>
+                  <div className="grid grid-cols-1 gap-10 md:gap-12 lg:gap-20 mb-16 md:mb-20 lg:mb-24 w-full mx-auto justify-items-center md:w-[95%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%]">
                     {featuredVideos.map((video, index) => (
                       <motion.div
                         key={video.id}
@@ -106,7 +107,7 @@ export function GalleryGrid({ sections }: GalleryGridProps) {
 
                 {/* Regular Videos - Below featured videos */}
                 {regularVideos.length > 0 && (
-                  <div className={styles.videoGrid}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {regularVideos.map((video, index) => (
                       <motion.div
                         key={video.id}
@@ -135,11 +136,12 @@ export function GalleryGrid({ sections }: GalleryGridProps) {
           const regularGalleries = section.images.filter((gallery) => !gallery.isFeatured)
 
           return (
-            <section key={section.id} className={styles.section}>
-              <div className={styles.container}>
+            <section key={section.id} className="py-12 md:py-16 lg:py-24 even:bg-stone-50">
+              <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
                 {/* Section Header - Appears at top of section */}
-                <div className={styles.sectionHeader}>
+                <div className="mb-12 text-center">
                   <motion.h2
+                    className="text-3xl md:text-4xl lg:text-5xl mb-4"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.15 }}
@@ -149,6 +151,7 @@ export function GalleryGrid({ sections }: GalleryGridProps) {
                   </motion.h2>
                   {section.description && (
                     <motion.p
+                      className="text-lg text-stone-600 max-w-[700px] mx-auto"
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, amount: 0.15 }}
@@ -161,7 +164,7 @@ export function GalleryGrid({ sections }: GalleryGridProps) {
 
                 {/* Featured Image Galleries - Displayed prominently after header */}
                 {featuredGalleries.length > 0 && (
-                  <div className={styles.featuredGrid}>
+                  <div className="grid grid-cols-1 gap-10 md:gap-12 lg:gap-20 mb-16 md:mb-20 lg:mb-24 w-full mx-auto justify-items-center md:w-[95%] lg:w-[92%] xl:w-[88%] 2xl:w-[85%]">
                     {featuredGalleries.map((gallery, index) => (
                       <motion.div
                         key={gallery.id}
@@ -182,7 +185,7 @@ export function GalleryGrid({ sections }: GalleryGridProps) {
 
                 {/* Regular Image Galleries - Below featured galleries */}
                 {regularGalleries.length > 0 && (
-                  <div className={styles.videoGrid}>
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {regularGalleries.map((gallery, index) => (
                       <motion.div
                         key={gallery.id}

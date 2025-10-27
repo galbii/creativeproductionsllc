@@ -222,9 +222,8 @@ Payload CMS backend with:
 #### Component Organization
 ```
 ComponentName/
-├── ComponentName.tsx           # Component logic
-├── ComponentName.module.css    # Component styles (CSS Modules)
-└── index.ts                    # Barrel export
+├── ComponentName.tsx    # Component logic (Tailwind CSS classes)
+└── index.ts             # Barrel export
 ```
 
 **Example `index.ts`:**
@@ -236,7 +235,8 @@ export { ComponentName } from './ComponentName'
 - **Functional Components**: Always use function declarations, not arrow functions
 - **TypeScript**: Define interfaces for props
 - **Client Directives**: Place `'use client'` at the very top when needed
-- **Imports**: Group by external, Next.js, local components, styles
+- **Imports**: Group by external, Next.js, local components
+- **Styling**: Use Tailwind utility classes directly in className
 
 **Example Component:**
 ```typescript
@@ -244,7 +244,6 @@ export { ComponentName } from './ComponentName'
 
 import React, { useState } from 'react'
 import Link from 'next/link'
-import styles from './Component.module.css'
 
 interface ComponentProps {
   title: string
@@ -253,9 +252,9 @@ interface ComponentProps {
 
 export function Component({ title, description }: ComponentProps) {
   return (
-    <div className={styles.container}>
-      <h1>{title}</h1>
-      {description && <p>{description}</p>}
+    <div className="max-w-7xl mx-auto px-6 py-8">
+      <h1 className="text-4xl font-display font-bold text-stone-900">{title}</h1>
+      {description && <p className="text-stone-600 mt-4">{description}</p>}
     </div>
   )
 }
@@ -315,64 +314,81 @@ export const ExampleCollection: CollectionConfig = {
 
 ---
 
-## Design System
+## Design System & Styling
 
-### CSS Custom Properties (`src/styles/design-system.css`)
+### Tailwind CSS v4
 
-The project uses a **centralized design system** with CSS custom properties for consistency.
+The project uses **Tailwind CSS v4** (utility-first CSS framework) with a custom earthy, light color scheme.
 
-**Key Systems:**
-- **Colors**: Zinc grey scale (50-950) with semantic tokens
-- **Typography**: Type scale, font weights, line heights, letter spacing
-- **Spacing**: 8px grid system (0-48)
-- **Animations**: Duration scale and easing functions
-- **Borders**: Widths and radius scale
-- **Shadows**: Elevation system
-- **Z-Index**: Layering scale
+**📚 For detailed styling documentation, see [`docs/STYLING.md`](docs/STYLING.md)**
 
-**Fonts:**
-- `--font-display`: Outfit (headings, display text)
-- `--font-body`: Inter (body text, UI)
-- `--font-mono`: Roboto Mono (code, technical)
+### Color Scheme
 
-**Color Tokens (Semantic):**
+**Light, Earthy Palette:**
+- **Primary Backgrounds**: White, stone-50 (off-white), stone-100 (cream)
+- **Header**: Stone-200 (warm grey)
+- **Primary Accent**: Terracotta (#C2705D) - CTAs, hover states
+- **Secondary Accent**: Sage green (#8B9A8B) - subtle highlights
+- **Text Colors**: Stone-900 (headings), stone-600 (body), stone-500 (tertiary)
+- **Borders**: Stone-200, stone-300
+
+### Key Files
+
+**Configuration:**
+- `postcss.config.mjs` - PostCSS configuration for Tailwind
+- `src/app/(frontend)/globals.css` - Tailwind imports + custom theme
+
+**Theme Definition:**
+Custom colors, fonts, and design tokens are defined in the `@theme` block of `globals.css`:
+
 ```css
---color-bg-primary: #000000;
---color-bg-secondary: #0a0a0a;
---color-text-primary: var(--color-zinc-50);
---color-text-secondary: var(--color-zinc-400);
---color-border: var(--color-zinc-800);
---color-accent: var(--color-zinc-50);
-```
+@import 'tailwindcss';
 
-**Usage in Components:**
-```css
-.component {
-  background: var(--color-bg-secondary);
-  color: var(--color-text-primary);
-  padding: var(--space-8);
-  border-radius: var(--radius-lg);
-  transition: all var(--duration-normal) var(--ease-smooth);
+@theme {
+  /* Custom terracotta accent */
+  --color-terracotta-500: #c2705d;
+
+  /* Custom sage accent */
+  --color-sage-400: #8b9a8b;
+
+  /* Font families */
+  --font-display: var(--font-outfit, 'Outfit', ...);
+  --font-body: var(--font-inter, 'Inter', ...);
 }
 ```
 
+### Usage in Components
+
+**Utility-First Approach:**
+```jsx
+<header className="sticky top-0 bg-stone-200/90 backdrop-blur-xl">
+  <div className="max-w-7xl mx-auto px-6 py-4">
+    <button className="bg-terracotta-500 hover:bg-terracotta-600 text-white px-8 py-4 rounded-lg">
+      Contact Us
+    </button>
+  </div>
+</header>
+```
+
+**Fonts:**
+- `font-display` - Outfit (headings, display text)
+- `font-body` - Inter (body text, UI)
+
 ### Responsive Breakpoints (Mobile-First)
-```css
-/* Default: Mobile */
-/* sm: 640px */
-@media (min-width: 640px) { }
 
-/* md: 768px */
-@media (min-width: 768px) { }
+Tailwind's built-in breakpoints:
+- **Default**: Mobile (< 640px)
+- **sm**: 640px (small tablets)
+- **md**: 768px (tablets)
+- **lg**: 1024px (laptops)
+- **xl**: 1280px (desktops)
+- **2xl**: 1536px (large desktops)
 
-/* lg: 1024px */
-@media (min-width: 1024px) { }
-
-/* xl: 1280px */
-@media (min-width: 1280px) { }
-
-/* 2xl: 1536px */
-@media (min-width: 1536px) { }
+**Example:**
+```jsx
+<div className="flex flex-col md:flex-row gap-4 md:gap-8">
+  {/* Column on mobile, row on tablet+ */}
+</div>
 ```
 
 ---
@@ -530,10 +546,10 @@ This allows importing `.ts` files with `.js` extensions in imports.
 
 ### Creating a New Component
 1. Create folder in `src/components/ComponentName/`
-2. Create `ComponentName.tsx` with component logic
-3. Create `ComponentName.module.css` for styles
-4. Create `index.ts` with barrel export
-5. Import via `import { ComponentName } from '@/components/ComponentName'`
+2. Create `ComponentName.tsx` with component logic and Tailwind classes
+3. Create `index.ts` with barrel export
+4. Import via `import { ComponentName } from '@/components/ComponentName'`
+5. Refer to `docs/STYLING.md` for styling patterns and color usage
 
 ### Modifying Collection Schema
 1. Edit collection file in `src/collections/`
@@ -542,10 +558,11 @@ This allows importing `.ts` files with `.js` extensions in imports.
 4. Update frontend components that consume the data
 
 ### Styling Best Practices
-1. **Use CSS Modules** for component-specific styles
-2. **Use design system tokens** from `design-system.css`
-3. **Follow mobile-first** responsive design
+1. **Use Tailwind utility classes** for component styling
+2. **Use semantic color names** (e.g., `bg-terracotta-500` not `bg-[#C2705D]`)
+3. **Follow mobile-first** responsive design with Tailwind breakpoints
 4. **Respect accessibility**: focus states, reduced motion, semantic HTML
+5. **Refer to `docs/STYLING.md`** for detailed patterns and examples
 
 ---
 
@@ -585,8 +602,10 @@ bun install
 
 ## Additional Resources
 
+- **Styling Guide**: [`docs/STYLING.md`](docs/STYLING.md) - Comprehensive Tailwind CSS setup and patterns
 - **Payload CMS Docs**: https://payloadcms.com/docs
 - **Next.js 15 Docs**: https://nextjs.org/docs
+- **Tailwind CSS Docs**: https://tailwindcss.com/docs
 - **TypeScript Handbook**: https://www.typescriptlang.org/docs/
 
 ---
@@ -661,8 +680,10 @@ When working on this project:
 3. **Add revalidation hooks** to new collections (see template above)
 4. **Follow established patterns** for components, collections, and styling
 5. **Use TypeScript strictly** - avoid `any`, prefer explicit types
-6. **Respect the design system** - use CSS custom properties, not hardcoded values
-7. **Mark client components** with `'use client'` directive when using hooks or browser APIs
-8. **Use Server Components by default** in Next.js App Router
-9. **Test changes** with both integration and e2e tests when appropriate
-10. **Leverage Bun's speed** - it's significantly faster than Node.js for most operations
+6. **Use Tailwind CSS utility classes** - avoid hardcoded values or custom CSS
+7. **Use semantic color names** - `bg-terracotta-500` not `bg-[#C2705D]`
+8. **Refer to `docs/STYLING.md`** for styling patterns and best practices
+9. **Mark client components** with `'use client'` directive when using hooks or browser APIs
+10. **Use Server Components by default** in Next.js App Router
+11. **Test changes** with both integration and e2e tests when appropriate
+12. **Leverage Bun's speed** - it's significantly faster than Node.js for most operations

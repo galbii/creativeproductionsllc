@@ -1,0 +1,151 @@
+/**
+ * Frontend Global Styles - Creative Productions LLC
+ * Tailwind CSS v4 with custom earthy color theme
+ */
+
+@import 'tailwindcss';
+
+/* Custom Theme Configuration */
+@theme {
+  /* ===== Custom Earthy Color Palette ===== */
+
+  /* Terracotta Accent */
+  --color-terracotta-50: #fdf5f3;
+  --color-terracotta-100: #fbe8e3;
+  --color-terracotta-200: #f7cec3;
+  --color-terracotta-300: #f0a99a;
+  --color-terracotta-400: #e57a63;
+  --color-terracotta-500: #c2705d;
+  --color-terracotta-600: #a85642;
+  --color-terracotta-700: #8b4536;
+  --color-terracotta-800: #6f3a2f;
+  --color-terracotta-900: #5a3228;
+
+  /* Sage Green Accent */
+  --color-sage-50: #f6f7f6;
+  --color-sage-100: #e8eae8;
+  --color-sage-200: #d4d8d4;
+  --color-sage-300: #b3bcb3;
+  --color-sage-400: #8b9a8b;
+  --color-sage-500: #6d7e6d;
+  --color-sage-600: #586758;
+  --color-sage-700: #495449;
+  --color-sage-800: #3d453d;
+  --color-sage-900: #343a34;
+
+  /* Warm Cream */
+  --color-cream: #faf9f7;
+  --color-cream-dark: #f5f3f0;
+
+  /* Font Families */
+  --font-display: var(--font-outfit, 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+  --font-body: var(--font-inter, 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif);
+
+  /* Custom Spacing */
+  --spacing-section-y: 6rem; /* 96px */
+  --spacing-section-x: 2rem; /* 32px */
+
+  /* Custom Animations */
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-moderate: 300ms;
+  --duration-slow: 400ms;
+
+  /* Easing Functions */
+  --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ===== Base Styles ===== */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white text-stone-800 font-body;
+  min-height: 100vh;
+}
+
+/* ===== Typography ===== */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-display font-semibold;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+  color: rgb(28 25 23); /* stone-900 as default, can be overridden */
+}
+
+h1 {
+  @apply text-5xl md:text-6xl lg:text-7xl font-bold mb-6;
+}
+
+h2 {
+  @apply text-4xl md:text-5xl mb-6;
+}
+
+h3 {
+  @apply text-3xl md:text-4xl mb-4;
+}
+
+h4 {
+  @apply text-2xl mb-4;
+}
+
+p {
+  @apply text-stone-600 leading-relaxed mb-4;
+}
+
+/* ===== Links ===== */
+a {
+  @apply transition-opacity duration-150;
+}
+
+a:hover {
+  @apply opacity-80;
+}
+
+a:focus-visible {
+  @apply outline-2 outline-stone-900 outline-offset-2;
+}
+
+/* ===== Images ===== */
+img {
+  @apply max-w-full h-auto block;
+}
+
+svg {
+  @apply align-middle;
+}
+
+/* ===== Container Utility ===== */
+.container {
+  @apply w-full max-w-7xl mx-auto px-6 md:px-10 lg:px-16;
+}
+
+/* ===== Section Utility ===== */
+.section {
+  @apply py-16 md:py-20 lg:py-24;
+}
+
+/* ===== Accessibility ===== */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

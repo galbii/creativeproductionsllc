@@ -2,7 +2,6 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import styles from './SequentialText.module.css'
 
 interface SequentialTextProps {
   line1: string
@@ -36,9 +35,9 @@ export function SequentialText({ line1, line2 }: SequentialTextProps) {
   }
 
   return (
-    <div className={styles.container}>
+    <div className="text-center flex flex-col gap-4">
       <motion.div
-        className={styles.line1}
+        className="font-display text-2xl md:text-3xl lg:text-4xl font-light text-stone-600 tracking-wider uppercase"
         initial="hidden"
         animate="visible"
         variants={line1Variants}
@@ -47,7 +46,7 @@ export function SequentialText({ line1, line2 }: SequentialTextProps) {
       </motion.div>
 
       <motion.div
-        className={styles.line2}
+        className="font-display text-5xl md:text-7xl lg:text-9xl font-bold text-stone-900 tracking-tighter leading-tight bg-gradient-to-r from-stone-900 to-stone-600 bg-clip-text text-transparent"
         initial="hidden"
         animate="visible"
         variants={line2Variants}

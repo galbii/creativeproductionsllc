@@ -3,7 +3,6 @@ import { Header } from '@/components/Header'
 import { AboutSections } from '@/components/AboutSections'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
-import type { TeamMember } from '@/payload-types'
 
 export const metadata = {
   title: 'About | Creative Productions LLC',

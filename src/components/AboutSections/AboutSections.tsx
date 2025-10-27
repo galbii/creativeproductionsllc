@@ -4,8 +4,7 @@ import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
-import type { TeamMember as TeamMemberType, Media } from '@/payload-types'
-import styles from './AboutSections.module.css'
+import type { TeamMember as TeamMemberType } from '@/payload-types'
 
 interface AboutSectionsProps {
   teamMembers: TeamMemberType[]
@@ -16,26 +15,43 @@ export function AboutSections({ teamMembers }: AboutSectionsProps) {
     <>
       {/* Hero Section */}
       <motion.section
-        className={styles.hero}
+        className="relative min-h-[60vh] flex items-center justify-center text-center py-12 md:py-16 lg:py-24 overflow-hidden"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0, 0, 0.2, 1] }}
       >
-        <h1 className={styles.heroTitle}>
+        {/* Background Image */}
+        <motion.div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0"
+          style={{
+            backgroundImage: "url('/images/istock_000017395433large.jpg')",
+          }}
+          initial={{ scale: 1.1, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={{ duration: 1.2, ease: [0, 0, 0.2, 1] }}
+        />
+        {/* Overlay */}
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-b from-stone-900/50 via-stone-900/60 to-stone-900/70 z-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8 }}
+        />
+        <h1 className="relative z-20 max-w-[900px] mx-auto px-6 md:px-8 lg:px-12 text-4xl md:text-5xl lg:text-6xl leading-tight !text-white">
           We bring bold ideas to life through the power of video storytelling
         </h1>
       </motion.section>
 
       {/* Mission Section */}
       <motion.section
-        className={styles.mission}
+        className="py-12 md:py-16 lg:py-24"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
       >
-        <div className={styles.container}>
+        <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-12">
           <motion.span
-            className={styles.label}
+            className="inline-block font-body text-xs font-medium uppercase tracking-widest text-stone-500 mb-6"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
@@ -54,23 +70,23 @@ export function AboutSections({ teamMembers }: AboutSectionsProps) {
           </motion.h2>
 
           <motion.div
-            className={styles.textContent}
+            className="mt-8"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.6, delay: 0.2, ease: [0, 0, 0.2, 1] }}
           >
-            <p>
+            <p className="text-lg leading-relaxed text-stone-600 mb-6">
               At Creative Productions LLC, we specialize in creating compelling video content that
               resonates with audiences and drives measurable results. With years of experience in the
               Los Angeles production scene, we&apos;ve perfected the art of visual storytelling.
             </p>
-            <p>
+            <p className="text-lg leading-relaxed text-stone-600 mb-6">
               Our team combines technical expertise with creative vision to deliver video content that
               exceeds expectations. From initial concept to final delivery, we&apos;re committed to
               producing work that stands out in today&apos;s crowded digital landscape.
             </p>
-            <p>
+            <p className="text-lg leading-relaxed text-stone-600 mb-6">
               We believe that great video production is more than just capturing footage—it&apos;s
               about crafting narratives that connect, engage, and inspire action.
             </p>
@@ -79,10 +95,10 @@ export function AboutSections({ teamMembers }: AboutSectionsProps) {
       </motion.section>
 
       {/* Capabilities Section */}
-      <section className={styles.capabilities}>
-        <div className={styles.container}>
+      <section className="bg-stone-50 py-12 md:py-16 lg:py-24">
+        <div className="max-w-5xl mx-auto px-6 md:px-8 lg:px-12">
           <motion.span
-            className={styles.label}
+            className="inline-block font-body text-xs font-medium uppercase tracking-widest text-stone-500 mb-6"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
@@ -100,7 +116,7 @@ export function AboutSections({ teamMembers }: AboutSectionsProps) {
             Our Capabilities
           </motion.h2>
 
-          <div className={styles.grid}>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mt-12">
             {[
               {
                 number: '01',
@@ -141,7 +157,7 @@ export function AboutSections({ teamMembers }: AboutSectionsProps) {
             ].map((capability, index) => (
               <motion.div
                 key={capability.number}
-                className={styles.card}
+                className="p-8 bg-white border border-stone-200 rounded-md transition-all duration-300 ease-out hover:bg-stone-50 hover:border-terracotta-500 hover:-translate-y-1"
                 initial={{ opacity: 0, y: 30, scale: 0.95 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true, amount: 0.1 }}
@@ -151,9 +167,11 @@ export function AboutSections({ teamMembers }: AboutSectionsProps) {
                   ease: [0, 0, 0.2, 1],
                 }}
               >
-                <div className={styles.cardNumber}>{capability.number}</div>
-                <h3>{capability.title}</h3>
-                <p>{capability.description}</p>
+                <div className="font-display text-sm font-medium text-stone-400 mb-4 tracking-wider">
+                  {capability.number}
+                </div>
+                <h3 className="text-2xl mb-3 text-stone-900">{capability.title}</h3>
+                <p className="text-base text-stone-600 leading-relaxed m-0">{capability.description}</p>
               </motion.div>
             ))}
           </div>
@@ -161,10 +179,10 @@ export function AboutSections({ teamMembers }: AboutSectionsProps) {
       </section>
 
       {/* Process Section */}
-      <section className={styles.process}>
-        <div className={styles.container}>
+      <section className="py-12 md:py-16 lg:py-24">
+        <div className="max-w-4xl mx-auto px-6 md:px-8 lg:px-12">
           <motion.span
-            className={styles.label}
+            className="inline-block font-body text-xs font-medium uppercase tracking-widest text-stone-500 mb-6"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
@@ -182,7 +200,7 @@ export function AboutSections({ teamMembers }: AboutSectionsProps) {
             How We Work
           </motion.h2>
 
-          <div className={styles.steps}>
+          <div className="mt-12 flex flex-col gap-16">
             {[
               {
                 number: '1',
@@ -211,7 +229,7 @@ export function AboutSections({ teamMembers }: AboutSectionsProps) {
             ].map((step, index) => (
               <motion.div
                 key={step.number}
-                className={styles.step}
+                className="relative pl-16"
                 initial={{ opacity: 0, y: 40 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
@@ -221,9 +239,11 @@ export function AboutSections({ teamMembers }: AboutSectionsProps) {
                   ease: [0, 0, 0.2, 1],
                 }}
               >
-                <div className={styles.stepNumber}>{step.number}</div>
-                <h3>{step.title}</h3>
-                <p>{step.description}</p>
+                <div className="absolute left-0 top-0 font-display text-9xl font-extrabold text-stone-950 leading-none opacity-10 pointer-events-none">
+                  {step.number}
+                </div>
+                <h3 className="text-3xl mb-4 relative z-10">{step.title}</h3>
+                <p className="text-lg text-stone-600 leading-relaxed m-0">{step.description}</p>
               </motion.div>
             ))}
           </div>
@@ -232,10 +252,10 @@ export function AboutSections({ teamMembers }: AboutSectionsProps) {
 
       {/* Team Section */}
       {teamMembers.length > 0 && (
-        <section className={styles.team}>
-          <div className={styles.container}>
+        <section className="bg-stone-50 py-12 md:py-16 lg:py-24">
+          <div className="max-w-5xl mx-auto px-6 md:px-8 lg:px-12">
             <motion.span
-              className={styles.label}
+              className="inline-block font-body text-xs font-medium uppercase tracking-widest text-stone-500 mb-6"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2 }}
@@ -253,7 +273,7 @@ export function AboutSections({ teamMembers }: AboutSectionsProps) {
               Meet the People Behind the Work
             </motion.h2>
 
-            <div className={styles.teamGrid}>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 mt-12">
               {teamMembers.map((member, index) => {
                 const imageData = typeof member.image === 'object' ? member.image : null
                 const imageUrl = imageData?.url || ''
@@ -261,7 +281,7 @@ export function AboutSections({ teamMembers }: AboutSectionsProps) {
                 return (
                   <motion.div
                     key={member.id}
-                    className={styles.teamCard}
+                    className="flex flex-col bg-white border border-stone-200 rounded-lg overflow-hidden transition-all duration-300 ease-out hover:bg-stone-50 hover:border-terracotta-500 hover:-translate-y-1.5"
                     initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true, amount: 0.1 }}
@@ -272,19 +292,22 @@ export function AboutSections({ teamMembers }: AboutSectionsProps) {
                     }}
                   >
                     {imageUrl && (
-                      <div className={styles.teamImageWrapper}>
+                      <div className="relative w-full aspect-square bg-stone-100 overflow-hidden">
                         <Image
                           src={imageUrl}
                           alt={imageData?.alt || member.name}
                           fill
+                          className="object-cover transition-transform duration-500 ease-out hover:scale-105"
                           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         />
                       </div>
                     )}
-                    <div className={styles.teamContent}>
-                      <h3>{member.name}</h3>
-                      <p className={styles.role}>{member.role}</p>
-                      <p>{member.bio}</p>
+                    <div className="p-6 flex-1 flex flex-col">
+                      <h3 className="text-2xl font-semibold m-0 mb-2 text-stone-900">{member.name}</h3>
+                      <p className="text-sm font-medium text-stone-500 uppercase tracking-wide m-0 mb-4">
+                        {member.role}
+                      </p>
+                      <p className="text-base leading-relaxed text-stone-600 m-0">{member.bio}</p>
                     </div>
                   </motion.div>
                 )
@@ -296,21 +319,26 @@ export function AboutSections({ teamMembers }: AboutSectionsProps) {
 
       {/* CTA Section */}
       <motion.section
-        className={styles.cta}
+        className="min-h-[60vh] flex items-center justify-center text-center py-12 md:py-16 lg:py-24"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.8, ease: [0, 0, 0.2, 1] }}
       >
-        <div className={styles.container}>
-          <h2 className={styles.ctaTitle}>Let&apos;s create something remarkable together</h2>
+        <div className="max-w-5xl mx-auto px-6 md:px-8 lg:px-12">
+          <h2 className="max-w-[700px] mx-auto mb-10 px-6 md:px-8 lg:px-12 text-3xl md:text-4xl lg:text-5xl leading-snug">
+            Let&apos;s create something remarkable together
+          </h2>
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.6, delay: 0.2, ease: [0, 0, 0.2, 1] }}
           >
-            <Link href="/contact" className={styles.ctaButton}>
+            <Link
+              href="/contact"
+              className="inline-block px-8 py-4 bg-terracotta-500 text-white font-body text-base font-semibold no-underline rounded-md transition-all duration-300 ease-smooth border-2 border-terracotta-500 hover:bg-terracotta-600 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(194,112,93,0.2)]"
+            >
               Get in Touch
             </Link>
           </motion.div>

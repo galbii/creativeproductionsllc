@@ -1,7 +1,6 @@
 'use client'
 
 import React, { useState } from 'react'
-import styles from './QuoteForm.module.css'
 
 interface FormData {
   // Contact Information
@@ -131,14 +130,16 @@ export function QuoteForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
+    <form onSubmit={handleSubmit} className="max-w-[900px] mx-auto">
       {/* Contact Information */}
-      <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>Contact Information</h2>
-        <div className={styles.grid}>
-          <div className={styles.field}>
-            <label htmlFor="name" className={styles.label}>
-              Full Name <span className={styles.required}>*</span>
+      <div className="mb-12 p-8 bg-white border border-stone-200 rounded-lg">
+        <h2 className="text-2xl font-semibold text-stone-900 mb-6 pb-4 border-b border-stone-200">
+          Contact Information
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="flex flex-col">
+            <label htmlFor="name" className="text-sm font-medium text-stone-900 mb-2 uppercase tracking-wide">
+              Full Name <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -147,13 +148,13 @@ export function QuoteForm() {
               value={formData.name}
               onChange={handleChange}
               required
-              className={styles.input}
+              className="w-full px-4 py-3 text-base font-body text-stone-900 bg-white border border-stone-300 rounded-md transition-all duration-200 ease-smooth focus:outline-none focus:border-terracotta-500 focus:shadow-[0_0_0_3px_rgba(194,112,93,0.1)] placeholder:text-stone-400"
             />
           </div>
 
-          <div className={styles.field}>
-            <label htmlFor="email" className={styles.label}>
-              Email <span className={styles.required}>*</span>
+          <div className="flex flex-col">
+            <label htmlFor="email" className="text-sm font-medium text-stone-900 mb-2 uppercase tracking-wide">
+              Email <span className="text-red-500">*</span>
             </label>
             <input
               type="email"
@@ -162,12 +163,12 @@ export function QuoteForm() {
               value={formData.email}
               onChange={handleChange}
               required
-              className={styles.input}
+              className="w-full px-4 py-3 text-base font-body text-stone-900 bg-white border border-stone-300 rounded-md transition-all duration-200 ease-smooth focus:outline-none focus:border-terracotta-500 focus:shadow-[0_0_0_3px_rgba(194,112,93,0.1)] placeholder:text-stone-400"
             />
           </div>
 
-          <div className={styles.field}>
-            <label htmlFor="phone" className={styles.label}>
+          <div className="flex flex-col">
+            <label htmlFor="phone" className="text-sm font-medium text-stone-900 mb-2 uppercase tracking-wide">
               Phone Number
             </label>
             <input
@@ -176,12 +177,12 @@ export function QuoteForm() {
               name="phone"
               value={formData.phone}
               onChange={handleChange}
-              className={styles.input}
+              className="w-full px-4 py-3 text-base font-body text-stone-900 bg-white border border-stone-300 rounded-md transition-all duration-200 ease-smooth focus:outline-none focus:border-terracotta-500 focus:shadow-[0_0_0_3px_rgba(194,112,93,0.1)] placeholder:text-stone-400"
             />
           </div>
 
-          <div className={styles.field}>
-            <label htmlFor="company" className={styles.label}>
+          <div className="flex flex-col">
+            <label htmlFor="company" className="text-sm font-medium text-stone-900 mb-2 uppercase tracking-wide">
               Company/Organization
             </label>
             <input
@@ -190,19 +191,21 @@ export function QuoteForm() {
               name="company"
               value={formData.company}
               onChange={handleChange}
-              className={styles.input}
+              className="w-full px-4 py-3 text-base font-body text-stone-900 bg-white border border-stone-300 rounded-md transition-all duration-200 ease-smooth focus:outline-none focus:border-terracotta-500 focus:shadow-[0_0_0_3px_rgba(194,112,93,0.1)] placeholder:text-stone-400"
             />
           </div>
         </div>
       </div>
 
       {/* Project Details */}
-      <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>Project Details</h2>
-        <div className={styles.grid}>
-          <div className={styles.field}>
-            <label htmlFor="projectType" className={styles.label}>
-              Project Type <span className={styles.required}>*</span>
+      <div className="mb-12 p-8 bg-white border border-stone-200 rounded-lg">
+        <h2 className="text-2xl font-semibold text-stone-900 mb-6 pb-4 border-b border-stone-200">
+          Project Details
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="flex flex-col">
+            <label htmlFor="projectType" className="text-sm font-medium text-stone-900 mb-2 uppercase tracking-wide">
+              Project Type <span className="text-red-500">*</span>
             </label>
             <select
               id="projectType"
@@ -210,7 +213,7 @@ export function QuoteForm() {
               value={formData.projectType}
               onChange={handleChange}
               required
-              className={styles.select}
+              className="w-full px-4 py-3 text-base font-body text-stone-900 bg-white border border-stone-300 rounded-md transition-all duration-200 ease-smooth cursor-pointer appearance-none bg-[url('data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%2212%22%20height=%2212%22%20viewBox=%220%200%2012%2012%22%3E%3Cpath%20fill=%22%23a8a29e%22%20d=%22M6%209L1%204h10z%22/%3E%3C/svg%3E')] bg-no-repeat bg-[right_1rem_center] pr-12 focus:outline-none focus:border-terracotta-500 focus:shadow-[0_0_0_3px_rgba(194,112,93,0.1)]"
             >
               <option value="">Select a project type</option>
               <option value="corporate">Corporate Video</option>
@@ -225,9 +228,9 @@ export function QuoteForm() {
             </select>
           </div>
 
-          <div className={styles.field}>
-            <label htmlFor="videoLength" className={styles.label}>
-              Desired Video Length <span className={styles.required}>*</span>
+          <div className="flex flex-col">
+            <label htmlFor="videoLength" className="text-sm font-medium text-stone-900 mb-2 uppercase tracking-wide">
+              Desired Video Length <span className="text-red-500">*</span>
             </label>
             <select
               id="videoLength"
@@ -235,7 +238,7 @@ export function QuoteForm() {
               value={formData.videoLength}
               onChange={handleChange}
               required
-              className={styles.select}
+              className="w-full px-4 py-3 text-base font-body text-stone-900 bg-white border border-stone-300 rounded-md transition-all duration-200 ease-smooth cursor-pointer appearance-none bg-[url('data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%2212%22%20height=%2212%22%20viewBox=%220%200%2012%2012%22%3E%3Cpath%20fill=%22%23a8a29e%22%20d=%22M6%209L1%204h10z%22/%3E%3C/svg%3E')] bg-no-repeat bg-[right_1rem_center] pr-12 focus:outline-none focus:border-terracotta-500 focus:shadow-[0_0_0_3px_rgba(194,112,93,0.1)]"
             >
               <option value="">Select length</option>
               <option value="under-30">Under 30 seconds</option>
@@ -248,8 +251,8 @@ export function QuoteForm() {
             </select>
           </div>
 
-          <div className={`${styles.field} ${styles.fullWidth}`}>
-            <label htmlFor="projectTitle" className={styles.label}>
+          <div className="flex flex-col col-span-1 md:col-span-2">
+            <label htmlFor="projectTitle" className="text-sm font-medium text-stone-900 mb-2 uppercase tracking-wide">
               Project Title
             </label>
             <input
@@ -258,14 +261,14 @@ export function QuoteForm() {
               name="projectTitle"
               value={formData.projectTitle}
               onChange={handleChange}
-              className={styles.input}
+              className="w-full px-4 py-3 text-base font-body text-stone-900 bg-white border border-stone-300 rounded-md transition-all duration-200 ease-smooth focus:outline-none focus:border-terracotta-500 focus:shadow-[0_0_0_3px_rgba(194,112,93,0.1)] placeholder:text-stone-400"
               placeholder="What's the working title for your project?"
             />
           </div>
 
-          <div className={`${styles.field} ${styles.fullWidth}`}>
-            <label htmlFor="projectDescription" className={styles.label}>
-              Project Description <span className={styles.required}>*</span>
+          <div className="flex flex-col col-span-1 md:col-span-2">
+            <label htmlFor="projectDescription" className="text-sm font-medium text-stone-900 mb-2 uppercase tracking-wide">
+              Project Description <span className="text-red-500">*</span>
             </label>
             <textarea
               id="projectDescription"
@@ -274,7 +277,7 @@ export function QuoteForm() {
               onChange={handleChange}
               required
               rows={6}
-              className={styles.textarea}
+              className="w-full px-4 py-3 text-base font-body text-stone-900 bg-white border border-stone-300 rounded-md transition-all duration-200 ease-smooth resize-y min-h-[120px] leading-relaxed focus:outline-none focus:border-terracotta-500 focus:shadow-[0_0_0_3px_rgba(194,112,93,0.1)] placeholder:text-stone-400"
               placeholder="Please describe your project, goals, target audience, and key message..."
             />
           </div>
@@ -282,12 +285,14 @@ export function QuoteForm() {
       </div>
 
       {/* Timeline & Budget */}
-      <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>Timeline & Budget</h2>
-        <div className={styles.grid}>
-          <div className={styles.field}>
-            <label htmlFor="timeline" className={styles.label}>
-              Project Timeline <span className={styles.required}>*</span>
+      <div className="mb-12 p-8 bg-white border border-stone-200 rounded-lg">
+        <h2 className="text-2xl font-semibold text-stone-900 mb-6 pb-4 border-b border-stone-200">
+          Timeline & Budget
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="flex flex-col">
+            <label htmlFor="timeline" className="text-sm font-medium text-stone-900 mb-2 uppercase tracking-wide">
+              Project Timeline <span className="text-red-500">*</span>
             </label>
             <select
               id="timeline"
@@ -295,7 +300,7 @@ export function QuoteForm() {
               value={formData.timeline}
               onChange={handleChange}
               required
-              className={styles.select}
+              className="w-full px-4 py-3 text-base font-body text-stone-900 bg-white border border-stone-300 rounded-md transition-all duration-200 ease-smooth cursor-pointer appearance-none bg-[url('data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%2212%22%20height=%2212%22%20viewBox=%220%200%2012%2012%22%3E%3Cpath%20fill=%22%23a8a29e%22%20d=%22M6%209L1%204h10z%22/%3E%3C/svg%3E')] bg-no-repeat bg-[right_1rem_center] pr-12 focus:outline-none focus:border-terracotta-500 focus:shadow-[0_0_0_3px_rgba(194,112,93,0.1)]"
             >
               <option value="">Select timeline</option>
               <option value="asap">ASAP (Rush)</option>
@@ -307,9 +312,9 @@ export function QuoteForm() {
             </select>
           </div>
 
-          <div className={styles.field}>
-            <label htmlFor="budget" className={styles.label}>
-              Budget Range <span className={styles.required}>*</span>
+          <div className="flex flex-col">
+            <label htmlFor="budget" className="text-sm font-medium text-stone-900 mb-2 uppercase tracking-wide">
+              Budget Range <span className="text-red-500">*</span>
             </label>
             <select
               id="budget"
@@ -317,7 +322,7 @@ export function QuoteForm() {
               value={formData.budget}
               onChange={handleChange}
               required
-              className={styles.select}
+              className="w-full px-4 py-3 text-base font-body text-stone-900 bg-white border border-stone-300 rounded-md transition-all duration-200 ease-smooth cursor-pointer appearance-none bg-[url('data:image/svg+xml,%3Csvg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%2212%22%20height=%2212%22%20viewBox=%220%200%2012%2012%22%3E%3Cpath%20fill=%22%23a8a29e%22%20d=%22M6%209L1%204h10z%22/%3E%3C/svg%3E')] bg-no-repeat bg-[right_1rem_center] pr-12 focus:outline-none focus:border-terracotta-500 focus:shadow-[0_0_0_3px_rgba(194,112,93,0.1)]"
             >
               <option value="">Select budget range</option>
               <option value="under-5k">Under $5,000</option>
@@ -332,84 +337,95 @@ export function QuoteForm() {
       </div>
 
       {/* Production Needs */}
-      <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>Production Services Needed</h2>
-        <div className={styles.checkboxGrid}>
-          <label className={styles.checkbox}>
+      <div className="mb-12 p-8 bg-white border border-stone-200 rounded-lg">
+        <h2 className="text-2xl font-semibold text-stone-900 mb-6 pb-4 border-b border-stone-200">
+          Production Services Needed
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <label className="flex items-center gap-3 p-3 cursor-pointer rounded-md transition-colors duration-200 ease-smooth hover:bg-stone-50">
             <input
               type="checkbox"
               name="needsScriptwriting"
               checked={formData.needsScriptwriting}
               onChange={handleChange}
+              className="w-5 h-5 cursor-pointer accent-terracotta-500"
             />
-            <span>Scriptwriting</span>
+            <span className="text-base text-stone-600 select-none">Scriptwriting</span>
           </label>
 
-          <label className={styles.checkbox}>
+          <label className="flex items-center gap-3 p-3 cursor-pointer rounded-md transition-colors duration-200 ease-smooth hover:bg-stone-50">
             <input
               type="checkbox"
               name="needsLocationScouting"
               checked={formData.needsLocationScouting}
               onChange={handleChange}
+              className="w-5 h-5 cursor-pointer accent-terracotta-500"
             />
-            <span>Location Scouting</span>
+            <span className="text-base text-stone-600 select-none">Location Scouting</span>
           </label>
 
-          <label className={styles.checkbox}>
+          <label className="flex items-center gap-3 p-3 cursor-pointer rounded-md transition-colors duration-200 ease-smooth hover:bg-stone-50">
             <input
               type="checkbox"
               name="needsActorsCasting"
               checked={formData.needsActorsCasting}
               onChange={handleChange}
+              className="w-5 h-5 cursor-pointer accent-terracotta-500"
             />
-            <span>Actors/Talent Casting</span>
+            <span className="text-base text-stone-600 select-none">Actors/Talent Casting</span>
           </label>
 
-          <label className={styles.checkbox}>
+          <label className="flex items-center gap-3 p-3 cursor-pointer rounded-md transition-colors duration-200 ease-smooth hover:bg-stone-50">
             <input
               type="checkbox"
               name="needsPostProduction"
               checked={formData.needsPostProduction}
               onChange={handleChange}
+              className="w-5 h-5 cursor-pointer accent-terracotta-500"
             />
-            <span>Post-Production/Editing</span>
+            <span className="text-base text-stone-600 select-none">Post-Production/Editing</span>
           </label>
 
-          <label className={styles.checkbox}>
+          <label className="flex items-center gap-3 p-3 cursor-pointer rounded-md transition-colors duration-200 ease-smooth hover:bg-stone-50">
             <input
               type="checkbox"
               name="needsMotionGraphics"
               checked={formData.needsMotionGraphics}
               onChange={handleChange}
+              className="w-5 h-5 cursor-pointer accent-terracotta-500"
             />
-            <span>Motion Graphics/Animation</span>
+            <span className="text-base text-stone-600 select-none">Motion Graphics/Animation</span>
           </label>
 
-          <label className={styles.checkbox}>
+          <label className="flex items-center gap-3 p-3 cursor-pointer rounded-md transition-colors duration-200 ease-smooth hover:bg-stone-50">
             <input
               type="checkbox"
               name="needsVoiceover"
               checked={formData.needsVoiceover}
               onChange={handleChange}
+              className="w-5 h-5 cursor-pointer accent-terracotta-500"
             />
-            <span>Voiceover/Narration</span>
+            <span className="text-base text-stone-600 select-none">Voiceover/Narration</span>
           </label>
         </div>
       </div>
 
       {/* Distribution */}
-      <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>Where will this video be used?</h2>
-        <div className={styles.checkboxGrid}>
+      <div className="mb-12 p-8 bg-white border border-stone-200 rounded-lg">
+        <h2 className="text-2xl font-semibold text-stone-900 mb-6 pb-4 border-b border-stone-200">
+          Where will this video be used?
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {['Website', 'Social Media', 'YouTube', 'Television', 'Events', 'Internal/Training'].map(
             (channel) => (
-              <label key={channel} className={styles.checkbox}>
+              <label key={channel} className="flex items-center gap-3 p-3 cursor-pointer rounded-md transition-colors duration-200 ease-smooth hover:bg-stone-50">
                 <input
                   type="checkbox"
                   checked={formData.distributionChannels.includes(channel)}
                   onChange={() => handleDistributionChange(channel)}
+                  className="w-5 h-5 cursor-pointer accent-terracotta-500"
                 />
-                <span>{channel}</span>
+                <span className="text-base text-stone-600 select-none">{channel}</span>
               </label>
             ),
           )}
@@ -417,11 +433,13 @@ export function QuoteForm() {
       </div>
 
       {/* Additional Information */}
-      <div className={styles.section}>
-        <h2 className={styles.sectionTitle}>Additional Information</h2>
-        <div className={styles.grid}>
-          <div className={`${styles.field} ${styles.fullWidth}`}>
-            <label htmlFor="referenceLinks" className={styles.label}>
+      <div className="mb-12 p-8 bg-white border border-stone-200 rounded-lg">
+        <h2 className="text-2xl font-semibold text-stone-900 mb-6 pb-4 border-b border-stone-200">
+          Additional Information
+        </h2>
+        <div className="grid grid-cols-1 gap-6">
+          <div className="flex flex-col">
+            <label htmlFor="referenceLinks" className="text-sm font-medium text-stone-900 mb-2 uppercase tracking-wide">
               Reference Links
             </label>
             <input
@@ -430,13 +448,13 @@ export function QuoteForm() {
               name="referenceLinks"
               value={formData.referenceLinks}
               onChange={handleChange}
-              className={styles.input}
+              className="w-full px-4 py-3 text-base font-body text-stone-900 bg-white border border-stone-300 rounded-md transition-all duration-200 ease-smooth focus:outline-none focus:border-terracotta-500 focus:shadow-[0_0_0_3px_rgba(194,112,93,0.1)] placeholder:text-stone-400"
               placeholder="Links to videos you like or want to emulate (optional)"
             />
           </div>
 
-          <div className={`${styles.field} ${styles.fullWidth}`}>
-            <label htmlFor="additionalNotes" className={styles.label}>
+          <div className="flex flex-col">
+            <label htmlFor="additionalNotes" className="text-sm font-medium text-stone-900 mb-2 uppercase tracking-wide">
               Additional Notes
             </label>
             <textarea
@@ -445,7 +463,7 @@ export function QuoteForm() {
               value={formData.additionalNotes}
               onChange={handleChange}
               rows={4}
-              className={styles.textarea}
+              className="w-full px-4 py-3 text-base font-body text-stone-900 bg-white border border-stone-300 rounded-md transition-all duration-200 ease-smooth resize-y min-h-[120px] leading-relaxed focus:outline-none focus:border-terracotta-500 focus:shadow-[0_0_0_3px_rgba(194,112,93,0.1)] placeholder:text-stone-400"
               placeholder="Any other details we should know about your project?"
             />
           </div>
@@ -453,19 +471,23 @@ export function QuoteForm() {
       </div>
 
       {/* Submit Button */}
-      <div className={styles.submitSection}>
-        <button type="submit" disabled={isSubmitting} className={styles.submitButton}>
+      <div className="text-center mt-12">
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="inline-flex items-center justify-center px-12 py-4 text-lg font-semibold font-body text-white bg-terracotta-500 border-2 border-terracotta-500 rounded-md cursor-pointer transition-all duration-300 ease-smooth min-w-[250px] hover:bg-terracotta-600 hover:-translate-y-0.5 hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
+        >
           {isSubmitting ? 'Submitting...' : 'Request Quote'}
         </button>
 
         {submitStatus === 'success' && (
-          <p className={styles.successMessage}>
+          <p className="mt-6 p-4 text-base text-green-400 bg-green-400/10 border border-green-600 rounded-md">
             Thank you! We&apos;ve received your quote request and will be in touch within 24 hours.
           </p>
         )}
 
         {submitStatus === 'error' && (
-          <p className={styles.errorMessage}>
+          <p className="mt-6 p-4 text-base text-red-400 bg-red-400/10 border border-red-600 rounded-md">
             Something went wrong. Please try again or contact us directly.
           </p>
         )}

@@ -3,7 +3,6 @@
 import React from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import styles from './ServicesSection.module.css'
 
 const services = [
   {
@@ -47,15 +46,15 @@ const services = [
 export function ServicesSection() {
   return (
     <motion.section
-      className={styles.section}
+      className="py-12 md:py-16 lg:py-24 bg-stone-50"
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.2 }}
     >
-      <div className={styles.container}>
-        <div className={styles.header}>
+      <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
+        <div className="text-center mb-16">
           <motion.span
-            className={styles.label}
+            className="inline-block font-body text-xs font-medium uppercase tracking-widest text-stone-500 mb-4"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
@@ -65,7 +64,7 @@ export function ServicesSection() {
           </motion.span>
 
           <motion.h2
-            className={styles.title}
+            className="text-3xl md:text-4xl lg:text-5xl mb-6 leading-tight"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
@@ -75,7 +74,7 @@ export function ServicesSection() {
           </motion.h2>
 
           <motion.p
-            className={styles.subtitle}
+            className="text-lg text-stone-600 max-w-[800px] mx-auto leading-relaxed"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.2 }}
@@ -86,26 +85,33 @@ export function ServicesSection() {
           </motion.p>
         </div>
 
-        <div className={styles.grid}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
           {services.map((service, index) => (
             <motion.div
               key={service.title}
-              className={styles.card}
-              initial={{ opacity: 0, y: 30, scale: 0.95 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1 }}
-              viewport={{ once: true, amount: 0.1 }}
+              className="p-8 bg-white border border-stone-200 rounded-lg transition-all duration-300 ease-out relative overflow-hidden hover:bg-stone-50 hover:border-terracotta-500 hover:-translate-y-1"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, amount: 0.3 }}
               transition={{
-                duration: 0.6,
-                delay: 0.5 + index * 0.1,
-                ease: [0, 0, 0.2, 1],
+                duration: 0.5,
+                delay: index * 0.05,
+                ease: 'easeOut',
               }}
             >
-              <div className={styles.cardNumber}>{String(index + 1).padStart(2, '0')}</div>
-              <h3 className={styles.cardTitle}>{service.title}</h3>
-              <p className={styles.cardDescription}>{service.description}</p>
-              <ul className={styles.keywords}>
+              <div className="font-display text-sm font-medium text-stone-400 mb-4 tracking-wider">
+                {String(index + 1).padStart(2, '0')}
+              </div>
+              <h3 className="text-2xl mb-4 text-stone-900 leading-tight">{service.title}</h3>
+              <p className="text-base text-stone-600 leading-relaxed mb-4">{service.description}</p>
+              <ul className="flex flex-wrap gap-2 list-none p-0 m-0">
                 {service.keywords.map((keyword) => (
-                  <li key={keyword}>{keyword}</li>
+                  <li
+                    key={keyword}
+                    className="text-xs text-stone-500 bg-stone-100 px-3 py-1 rounded-sm border border-stone-200"
+                  >
+                    {keyword}
+                  </li>
                 ))}
               </ul>
             </motion.div>
@@ -113,13 +119,16 @@ export function ServicesSection() {
         </div>
 
         <motion.div
-          className={styles.cta}
-          initial={{ opacity: 0, y: 20, scale: 0.95 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.5, delay: 1.1, ease: [0, 0, 0.2, 1] }}
+          className="text-center mt-16"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.5, delay: 0.3, ease: 'easeOut' }}
         >
-          <Link href="/contact" className={styles.ctaButton}>
+          <Link
+            href="/contact"
+            className="inline-flex items-center justify-center px-10 py-4 text-lg font-semibold bg-terracotta-500 text-white border-2 border-terracotta-500 rounded-md no-underline transition-all duration-300 ease-smooth min-w-[250px] hover:bg-terracotta-600 hover:-translate-y-0.5 hover:shadow-lg"
+          >
             Get a Free Quote
           </Link>
         </motion.div>

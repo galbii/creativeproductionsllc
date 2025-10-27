@@ -63,7 +63,7 @@ export const GallerySections: CollectionConfig = {
       },
       hooks: {
         beforeValidate: [
-          ({ value, data }: { value?: unknown; data?: Record<string, any> }) => {
+          ({ value, data }: { value?: unknown; data?: Record<string, unknown> }) => {
             // Auto-generate slug from title if not provided
             if (!value && data?.title && typeof data.title === 'string') {
               return data.title
