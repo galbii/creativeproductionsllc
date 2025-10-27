@@ -54,13 +54,13 @@ export function HeaderClient({ galleryItems }: HeaderClientProps) {
           className="flex items-center gap-3 transition-opacity hover:opacity-80 relative z-10"
         >
           <div
-            className={`relative transition-all duration-300 ${isScrolled ? 'w-14 h-14 mt-0' : 'w-[120px] h-[120px] mt-12'}`}
+            className={`relative transition-all duration-300 ${isScrolled ? 'w-14 h-14 mt-0 drop-shadow-[0_2px_8px_rgba(0,0,0,0.4)]' : 'w-[120px] h-[120px] mt-12 drop-shadow-[0_4px_16px_rgba(0,0,0,0.6)]'}`}
           >
             <Image
               src="/images/dropbox/creative productionscrest.jpg"
               alt="Creative Productions Logo"
               fill
-              className="object-contain"
+              className="object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]"
               priority
             />
           </div>
