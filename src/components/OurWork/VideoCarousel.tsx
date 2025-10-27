@@ -153,12 +153,12 @@ export function VideoCarousel({ videos }: VideoCarouselProps) {
                         </button>
 
                         {/* Video title overlay */}
-                        <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                          <h3 className="text-xl md:text-2xl font-display font-bold mb-2">
+                        <div className="absolute bottom-0 left-0 right-0 p-6 !text-white">
+                          <h3 className="text-xl md:text-2xl font-display font-bold mb-2 !text-white">
                             {video.title}
                           </h3>
                           {video.description && (
-                            <p className="text-sm md:text-base text-white/90 line-clamp-2">
+                            <p className="text-sm md:text-base !text-white/90 line-clamp-2">
                               {video.description}
                             </p>
                           )}
