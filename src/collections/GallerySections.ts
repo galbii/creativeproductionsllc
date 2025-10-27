@@ -14,11 +14,11 @@ export const GallerySections: CollectionConfig = {
   hooks: {
     afterChange: [
       async ({ doc, operation }) => {
-        // Revalidate gallery page when sections are added, updated, or deleted
+        // Revalidate specific section page and homepage when sections are added, updated, or deleted
         await revalidateContent({
           collection: 'gallery-sections',
-          paths: ['/', '/gallery'],
-          tags: ['gallery', 'sections'],
+          paths: ['/', `/gallery/${doc.slug}`],
+          tags: ['gallery', 'sections', `section-${doc.slug}`],
         })
 
         console.log(
@@ -33,8 +33,8 @@ export const GallerySections: CollectionConfig = {
         // Revalidate when a section is deleted
         await revalidateContent({
           collection: 'gallery-sections',
-          paths: ['/', '/gallery'],
-          tags: ['gallery', 'sections'],
+          paths: ['/', `/gallery/${doc.slug}`],
+          tags: ['gallery', 'sections', `section-${doc.slug}`],
         })
 
         console.log(`🔄 Revalidated gallery after deleting section: ${doc.title}`)

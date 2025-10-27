@@ -1,5 +1,6 @@
 import type { CollectionConfig } from 'payload'
 import { revalidateContent } from '../utilities/revalidate'
+import type { GallerySection } from '../payload-types'
 
 export const GalleryVideos: CollectionConfig = {
   slug: 'gallery-videos',
@@ -13,31 +14,57 @@ export const GalleryVideos: CollectionConfig = {
   },
   hooks: {
     afterChange: [
-      async ({ doc, operation }) => {
-        // Revalidate gallery page when videos are added, updated, or deleted
-        await revalidateContent({
-          collection: 'gallery-videos',
-          paths: ['/', '/gallery'],
-          tags: ['gallery', 'videos'],
-        })
+      async ({ doc, operation, req }) => {
+        // Get the section to determine the slug for revalidation
+        const section =
+          typeof doc.section === 'object'
+            ? (doc.section as GallerySection)
+            : await req.payload.findByID({
+                collection: 'gallery-sections',
+                id: doc.section as string,
+              })
 
-        console.log(
-          `🔄 Revalidated gallery after ${operation} operation on video: ${doc.title}`,
-        )
+        const sectionSlug = section?.slug
+
+        if (sectionSlug) {
+          // Revalidate specific section page when videos are added, updated, or deleted
+          await revalidateContent({
+            collection: 'gallery-videos',
+            paths: ['/', `/gallery/${sectionSlug}`],
+            tags: ['gallery', 'videos', `section-${sectionSlug}`],
+          })
+
+          console.log(
+            `🔄 Revalidated /gallery/${sectionSlug} after ${operation} operation on video: ${doc.title}`,
+          )
+        }
 
         return doc
       },
     ],
     afterDelete: [
-      async ({ doc }) => {
-        // Revalidate when a video is deleted
-        await revalidateContent({
-          collection: 'gallery-videos',
-          paths: ['/', '/gallery'],
-          tags: ['gallery', 'videos'],
-        })
+      async ({ doc, req }) => {
+        // Get the section to determine the slug for revalidation
+        const section =
+          typeof doc.section === 'object'
+            ? (doc.section as GallerySection)
+            : await req.payload.findByID({
+                collection: 'gallery-sections',
+                id: doc.section as string,
+              })
 
-        console.log(`🔄 Revalidated gallery after deleting video: ${doc.title}`)
+        const sectionSlug = section?.slug
+
+        if (sectionSlug) {
+          // Revalidate when a video is deleted
+          await revalidateContent({
+            collection: 'gallery-videos',
+            paths: ['/', `/gallery/${sectionSlug}`],
+            tags: ['gallery', 'videos', `section-${sectionSlug}`],
+          })
+
+          console.log(`🔄 Revalidated /gallery/${sectionSlug} after deleting video: ${doc.title}`)
+        }
       },
     ],
   },

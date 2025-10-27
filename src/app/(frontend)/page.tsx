@@ -1,5 +1,6 @@
 import React from 'react'
-import { Header } from '@/components/Header'
+import { HeaderWithNav } from '@/components/Header'
+import { Footer } from '@/components/Footer'
 import { HeroSection } from '@/components/HeroSection/HeroSection'
 import { OurWork } from '@/components/OurWork'
 import { ServicesSection } from '@/components/ServicesSection'
@@ -16,12 +17,13 @@ export const metadata = {
 export default async function HomePage() {
   return (
     <>
-      <Header />
+      <HeaderWithNav />
       <main>
         <HeroSection />
         <OurWork />
         <ServicesSection />
       </main>
+      <Footer />
     </>
   )
 }

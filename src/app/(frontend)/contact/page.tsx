@@ -1,60 +1,42 @@
 import React from 'react'
-import { Header } from '@/components/Header'
+import { HeaderWithNav } from '@/components/Header'
+import { Footer } from '@/components/Footer'
+import { ContactHeader } from '@/components/ContactHeader'
+import { ContactInfo } from '@/components/ContactInfo'
 import { QuoteForm } from '@/components/QuoteForm/QuoteForm'
-import styles from './page.module.css'
 
 export const metadata = {
   title: 'Contact Us | Creative Productions LLC',
-  description: 'Get a quote for your next video production project',
+  description: 'Get in touch with Creative Productions LLC. Professional video production services in Los Angeles. Call (310) 880-2213 or email joel@creativeproductionsllc.net for a quote.',
 }
 
 export default async function ContactPage() {
   return (
     <>
-      <Header />
-      <main className={styles.main}>
-        {/* Hero Section */}
-        <section className={`${styles.hero} ${styles.section}`}>
-          <div className={styles.container}>
-            <h1 className={styles.heroTitle}>Let&apos;s Create Something Amazing Together</h1>
-            <p className={styles.heroSubtitle}>
-              Tell us about your project and we&apos;ll get back to you within 24 hours with a
-              custom quote
-            </p>
-          </div>
-        </section>
+      <HeaderWithNav />
+      <main>
+        {/* Header Section */}
+        <ContactHeader />
 
-        {/* Form Section */}
-        <section className={`${styles.formSection} ${styles.section}`}>
-          <div className={styles.container}>
+        {/* Contact Info with Map */}
+        <ContactInfo phone="(310) 880-2213" email="joel@creativeproductionsllc.net" />
+
+        {/* Quote Form Section */}
+        <section className="py-16 md:py-20 lg:py-24 px-6 md:px-10 bg-stone-50">
+          <div className="max-w-5xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 mb-4">
+                Request a Quote
+              </h2>
+              <p className="text-lg text-stone-600 max-w-2xl mx-auto">
+                Tell us about your project and we&apos;ll get back to you within 24 hours with a custom quote
+              </p>
+            </div>
             <QuoteForm />
           </div>
         </section>
-
-        {/* Contact Info Section */}
-        <section className={`${styles.infoSection} ${styles.section}`}>
-          <div className={styles.container}>
-            <div className={styles.infoGrid}>
-              <div className={styles.infoCard}>
-                <h3>Email</h3>
-                <p>
-                  <a href="mailto:hello@creativeproductions.com">hello@creativeproductions.com</a>
-                </p>
-              </div>
-              <div className={styles.infoCard}>
-                <h3>Phone</h3>
-                <p>
-                  <a href="tel:+15555551234">(555) 555-1234</a>
-                </p>
-              </div>
-              <div className={styles.infoCard}>
-                <h3>Response Time</h3>
-                <p>We typically respond within 24 hours on business days</p>
-              </div>
-            </div>
-          </div>
-        </section>
       </main>
+      <Footer />
     </>
   )
 }

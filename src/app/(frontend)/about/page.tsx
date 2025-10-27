@@ -1,5 +1,6 @@
 import React from 'react'
-import { Header } from '@/components/Header'
+import { HeaderWithNav } from '@/components/Header'
+import { Footer } from '@/components/Footer'
 import { AboutSections } from '@/components/AboutSections'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
@@ -20,8 +21,9 @@ export default async function AboutPage() {
 
   return (
     <>
-      <Header />
+      <HeaderWithNav />
       <AboutSections teamMembers={teamMembers.docs} />
+      <Footer />
     </>
   )
 }
