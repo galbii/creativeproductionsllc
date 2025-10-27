@@ -138,7 +138,7 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 2.15, ease: [0, 0, 0.2, 1] }}
           >
             <Link
-              href="/gallery"
+              href="/about"
               className="
                 inline-flex items-center justify-center
                 px-8 py-4 min-w-[200px]
@@ -153,7 +153,7 @@ export function HeroSection() {
                 focus-visible:outline-2 focus-visible:outline-white focus-visible:outline-offset-2
               "
             >
-              View Gallery
+              Our Team
             </Link>
           </motion.div>
         </div>
