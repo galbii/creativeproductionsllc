@@ -96,7 +96,7 @@ export function HeaderClient({ galleryItems }: HeaderClientProps) {
           </Link>
 
           {/* Gallery Dropdown */}
-          <DropdownMenu trigger="Gallery" items={galleryItems} />
+          <DropdownMenu trigger="Gallery" items={galleryItems} mainHref="/gallery" />
 
           <Link
             href="/contact"

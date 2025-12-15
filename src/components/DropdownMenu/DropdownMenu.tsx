@@ -12,9 +12,10 @@ interface DropdownItem {
 interface DropdownMenuProps {
   trigger: string
   items: DropdownItem[]
+  mainHref?: string
 }
 
-export function DropdownMenu({ trigger, items }: DropdownMenuProps) {
+export function DropdownMenu({ trigger, items, mainHref }: DropdownMenuProps) {
   const [isOpen, setIsOpen] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
@@ -39,21 +40,43 @@ export function DropdownMenu({ trigger, items }: DropdownMenuProps) {
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
     >
-      <button
-        className="
-          font-body text-base font-medium text-stone-600 tracking-wide
-          relative transition-colors hover:text-stone-900
-          after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[1px]
-          after:bg-stone-900 after:transition-all after:duration-200
-          hover:after:w-full
-          cursor-pointer
-        "
-        onClick={() => setIsOpen(!isOpen)}
-        aria-expanded={isOpen}
-        aria-haspopup="true"
-      >
-        {trigger}
-      </button>
+      {mainHref ? (
+        <Link
+          href={mainHref}
+          className="
+            font-body text-base font-medium text-stone-600 tracking-wide
+            relative transition-colors hover:text-stone-900
+            after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[1px]
+            after:bg-stone-900 after:transition-all after:duration-200
+            hover:after:w-full
+            cursor-pointer inline-block z-10 pointer-events-auto
+          "
+          aria-expanded={isOpen}
+          aria-haspopup="true"
+          onClick={(e) => {
+            // Allow the link to navigate normally
+            e.stopPropagation()
+          }}
+        >
+          {trigger}
+        </Link>
+      ) : (
+        <button
+          className="
+            font-body text-base font-medium text-stone-600 tracking-wide
+            relative transition-colors hover:text-stone-900
+            after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[1px]
+            after:bg-stone-900 after:transition-all after:duration-200
+            hover:after:w-full
+            cursor-pointer
+          "
+          onClick={() => setIsOpen(!isOpen)}
+          aria-expanded={isOpen}
+          aria-haspopup="true"
+        >
+          {trigger}
+        </button>
+      )}
 
       <AnimatePresence>
         {isOpen && items.length > 0 && (

@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { getPayload } from 'payload'
 import config from '@payload-config'
-import { VideoCarousel } from './VideoCarousel'
+import { HeroVideoCarousel } from './HeroVideoCarousel'
 import type { GalleryVideo } from '@/payload-types'
 
 export async function OurWork() {
@@ -42,7 +42,7 @@ export async function OurWork() {
           </span>
 
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold text-stone-900 mb-6 leading-tight">
-            Our Work
+            Stories That Move
           </h2>
 
           <p className="text-lg text-stone-600 max-w-[700px] mx-auto leading-relaxed">
@@ -51,9 +51,9 @@ export async function OurWork() {
           </p>
         </div>
 
-        {/* Video Carousel or Empty State */}
+        {/* Hero Video Carousel or Empty State */}
         {hasVideos ? (
-          <VideoCarousel videos={featuredVideos as GalleryVideo[]} />
+          <HeroVideoCarousel videos={featuredVideos as GalleryVideo[]} />
         ) : (
           <div className="text-center py-16 px-6">
             <div className="max-w-md mx-auto bg-stone-50 border-2 border-dashed border-stone-300 rounded-lg p-8">
@@ -86,15 +86,15 @@ export async function OurWork() {
           </div>
         )}
 
-        {/* View All CTA */}
+        {/* Book Consultation CTA */}
         <div className="text-center mt-12">
           <Link
-            href="/gallery"
-            className="inline-flex items-center justify-center px-8 py-4 text-lg font-semibold bg-transparent text-stone-900 border-2 border-stone-900 rounded-lg transition-all duration-200 hover:bg-stone-900 hover:text-white hover:-translate-y-0.5 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-stone-900 focus-visible:outline-offset-2"
+            href="/contact"
+            className="inline-flex items-center justify-center px-10 py-5 text-lg font-semibold bg-terracotta-500 text-white rounded-lg transition-all duration-200 hover:bg-terracotta-600 hover:-translate-y-1 hover:shadow-2xl focus-visible:outline-2 focus-visible:outline-terracotta-500 focus-visible:outline-offset-2"
           >
-            View All Projects
+            Book a Consultation
             <svg
-              className="ml-2 w-5 h-5"
+              className="ml-3 w-5 h-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -103,7 +103,7 @@ export async function OurWork() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
               />
             </svg>
           </Link>

@@ -20,27 +20,95 @@ export function AboutSections({ teamMembers }: AboutSectionsProps) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, ease: [0, 0, 0.2, 1] }}
       >
-        {/* Background Image */}
-        <motion.div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat z-0"
-          style={{
-            backgroundImage: "url('/images/istock_000017395433large.jpg')",
-          }}
-          initial={{ scale: 1.1, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={{ duration: 1.2, ease: [0, 0, 0.2, 1] }}
-        />
-        {/* Overlay */}
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-b from-stone-900/50 via-stone-900/60 to-stone-900/70 z-10"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8 }}
-        />
+        {/* Background Video */}
+        <div className="absolute inset-0 z-0">
+          <iframe
+            src="https://player.vimeo.com/video/868540633?background=1&autoplay=1&loop=1&muted=1&controls=0&title=0&byline=0&portrait=0"
+            className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto -translate-x-1/2 -translate-y-1/2"
+            style={{
+              width: '100vw',
+              height: '56.25vw',
+              minHeight: '100%',
+              minWidth: '177.77vh',
+            }}
+            frameBorder="0"
+            allow="autoplay; fullscreen; picture-in-picture"
+            title="About Hero Background Video"
+          />
+          {/* Dark overlay for better text readability */}
+          <div className="absolute inset-0 bg-gradient-to-b from-stone-900/50 via-stone-900/60 to-stone-900/70 z-10" />
+        </div>
         <h1 className="relative z-20 max-w-[900px] mx-auto px-6 md:px-8 lg:px-12 text-4xl md:text-5xl lg:text-6xl leading-tight !text-white">
           We bring bold ideas to life through the power of video storytelling
         </h1>
       </motion.section>
+
+      {/* Team Section */}
+      {teamMembers.length > 0 && (
+        <section className="bg-stone-50 py-12 md:py-16 lg:py-24">
+          <div className="max-w-5xl mx-auto px-6 md:px-8 lg:px-12">
+            <motion.span
+              className="inline-block font-body text-xs font-medium uppercase tracking-widest text-stone-500 mb-6"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, ease: [0, 0, 0.2, 1] }}
+            >
+              Our Team
+            </motion.span>
+
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: [0, 0, 0.2, 1] }}
+            >
+              Meet the People Behind the Work
+            </motion.h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 mt-12">
+              {teamMembers.map((member, index) => {
+                const imageData = typeof member.image === 'object' ? member.image : null
+                const imageUrl = imageData?.url || ''
+
+                return (
+                  <motion.div
+                    key={member.id}
+                    className="flex flex-col bg-white border border-stone-200 rounded-lg overflow-hidden transition-all duration-300 ease-out hover:bg-stone-50 hover:border-terracotta-500 hover:-translate-y-1.5"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.1 }}
+                    transition={{
+                      duration: 0.6,
+                      delay: 0.2 + index * 0.15,
+                      ease: [0, 0, 0.2, 1],
+                    }}
+                  >
+                    {imageUrl && (
+                      <div className="relative w-full aspect-square bg-stone-100 overflow-hidden">
+                        <Image
+                          src={imageUrl}
+                          alt={imageData?.alt || member.name}
+                          fill
+                          className="object-cover transition-transform duration-500 ease-out hover:scale-105"
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        />
+                      </div>
+                    )}
+                    <div className="p-6 flex-1 flex flex-col">
+                      <h3 className="text-2xl font-semibold m-0 mb-2 text-stone-900">{member.name}</h3>
+                      <p className="text-sm font-medium text-stone-500 uppercase tracking-wide m-0 mb-4">
+                        {member.role}
+                      </p>
+                      <p className="text-base leading-relaxed text-stone-600 m-0">{member.bio}</p>
+                    </div>
+                  </motion.div>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Mission Section */}
       <motion.section
@@ -249,73 +317,6 @@ export function AboutSections({ teamMembers }: AboutSectionsProps) {
           </div>
         </div>
       </section>
-
-      {/* Team Section */}
-      {teamMembers.length > 0 && (
-        <section className="bg-stone-50 py-12 md:py-16 lg:py-24">
-          <div className="max-w-5xl mx-auto px-6 md:px-8 lg:px-12">
-            <motion.span
-              className="inline-block font-body text-xs font-medium uppercase tracking-widest text-stone-500 mb-6"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6, ease: [0, 0, 0.2, 1] }}
-            >
-              Our Team
-            </motion.span>
-
-            <motion.h2
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.2 }}
-              transition={{ duration: 0.6, delay: 0.1, ease: [0, 0, 0.2, 1] }}
-            >
-              Meet the People Behind the Work
-            </motion.h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10 mt-12">
-              {teamMembers.map((member, index) => {
-                const imageData = typeof member.image === 'object' ? member.image : null
-                const imageUrl = imageData?.url || ''
-
-                return (
-                  <motion.div
-                    key={member.id}
-                    className="flex flex-col bg-white border border-stone-200 rounded-lg overflow-hidden transition-all duration-300 ease-out hover:bg-stone-50 hover:border-terracotta-500 hover:-translate-y-1.5"
-                    initial={{ opacity: 0, y: 30 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.1 }}
-                    transition={{
-                      duration: 0.6,
-                      delay: 0.2 + index * 0.15,
-                      ease: [0, 0, 0.2, 1],
-                    }}
-                  >
-                    {imageUrl && (
-                      <div className="relative w-full aspect-square bg-stone-100 overflow-hidden">
-                        <Image
-                          src={imageUrl}
-                          alt={imageData?.alt || member.name}
-                          fill
-                          className="object-cover transition-transform duration-500 ease-out hover:scale-105"
-                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        />
-                      </div>
-                    )}
-                    <div className="p-6 flex-1 flex flex-col">
-                      <h3 className="text-2xl font-semibold m-0 mb-2 text-stone-900">{member.name}</h3>
-                      <p className="text-sm font-medium text-stone-500 uppercase tracking-wide m-0 mb-4">
-                        {member.role}
-                      </p>
-                      <p className="text-base leading-relaxed text-stone-600 m-0">{member.bio}</p>
-                    </div>
-                  </motion.div>
-                )
-              })}
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* CTA Section */}
       <motion.section

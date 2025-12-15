@@ -27,15 +27,15 @@ export const GalleryVideos: CollectionConfig = {
         const sectionSlug = section?.slug
 
         if (sectionSlug) {
-          // Revalidate specific section page when videos are added, updated, or deleted
+          // Revalidate master gallery, homepage, and specific section page
           await revalidateContent({
             collection: 'gallery-videos',
-            paths: ['/', `/gallery/${sectionSlug}`],
+            paths: ['/', '/gallery', `/gallery/${sectionSlug}`],
             tags: ['gallery', 'videos', `section-${sectionSlug}`],
           })
 
           console.log(
-            `🔄 Revalidated /gallery/${sectionSlug} after ${operation} operation on video: ${doc.title}`,
+            `🔄 Revalidated /gallery and /gallery/${sectionSlug} after ${operation} operation on video: ${doc.title}`,
           )
         }
 
@@ -56,14 +56,16 @@ export const GalleryVideos: CollectionConfig = {
         const sectionSlug = section?.slug
 
         if (sectionSlug) {
-          // Revalidate when a video is deleted
+          // Revalidate master gallery, homepage, and specific section page
           await revalidateContent({
             collection: 'gallery-videos',
-            paths: ['/', `/gallery/${sectionSlug}`],
+            paths: ['/', '/gallery', `/gallery/${sectionSlug}`],
             tags: ['gallery', 'videos', `section-${sectionSlug}`],
           })
 
-          console.log(`🔄 Revalidated /gallery/${sectionSlug} after deleting video: ${doc.title}`)
+          console.log(
+            `🔄 Revalidated /gallery and /gallery/${sectionSlug} after deleting video: ${doc.title}`,
+          )
         }
       },
     ],

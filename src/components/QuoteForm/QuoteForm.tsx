@@ -475,14 +475,29 @@ export function QuoteForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="inline-flex items-center justify-center px-12 py-4 text-lg font-semibold font-body text-white bg-terracotta-500 border-2 border-terracotta-500 rounded-md cursor-pointer transition-all duration-300 ease-smooth min-w-[250px] hover:bg-terracotta-600 hover:-translate-y-0.5 hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
+          className="inline-flex items-center justify-center px-10 py-5 text-lg font-semibold font-body text-white bg-terracotta-500 rounded-lg cursor-pointer transition-all duration-200 hover:bg-terracotta-600 hover:-translate-y-1 hover:shadow-2xl disabled:opacity-60 disabled:cursor-not-allowed focus-visible:outline-2 focus-visible:outline-terracotta-500 focus-visible:outline-offset-2"
         >
-          {isSubmitting ? 'Submitting...' : 'Request Quote'}
+          {isSubmitting ? 'Submitting...' : 'Submit Consultation Request'}
+          {!isSubmitting && (
+            <svg
+              className="ml-3 w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+              />
+            </svg>
+          )}
         </button>
 
         {submitStatus === 'success' && (
           <p className="mt-6 p-4 text-base text-green-400 bg-green-400/10 border border-green-600 rounded-md">
-            Thank you! We&apos;ve received your quote request and will be in touch within 24 hours.
+            Thank you! We&apos;ve received your consultation request and will be in touch within 24 hours.
           </p>
         )}
 

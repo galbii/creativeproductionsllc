@@ -26,10 +26,10 @@ export default async function ContactPage() {
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="font-display text-3xl md:text-4xl lg:text-5xl font-bold text-stone-900 mb-4">
-                Request a Quote
+                Book Your Consultation
               </h2>
               <p className="text-lg text-stone-600 max-w-2xl mx-auto">
-                Tell us about your project and we&apos;ll get back to you within 24 hours with a custom quote
+                Tell us about your project and we&apos;ll get back to you within 24 hours to discuss your vision
               </p>
             </div>
             <QuoteForm />

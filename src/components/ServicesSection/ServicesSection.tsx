@@ -127,9 +127,22 @@ export function ServicesSection() {
         >
           <Link
             href="/contact"
-            className="inline-flex items-center justify-center px-10 py-4 text-lg font-semibold bg-terracotta-500 text-white border-2 border-terracotta-500 rounded-md no-underline transition-all duration-300 ease-smooth min-w-[250px] hover:bg-terracotta-600 hover:-translate-y-0.5 hover:shadow-lg"
+            className="inline-flex items-center justify-center px-10 py-5 text-lg font-semibold bg-terracotta-500 text-white rounded-lg no-underline transition-all duration-200 hover:bg-terracotta-600 hover:-translate-y-1 hover:shadow-2xl focus-visible:outline-2 focus-visible:outline-terracotta-500 focus-visible:outline-offset-2"
           >
-            Get a Free Quote
+            Book a Consultation
+            <svg
+              className="ml-3 w-5 h-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+              />
+            </svg>
           </Link>
         </motion.div>
       </div>
