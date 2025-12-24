@@ -1,7 +1,6 @@
 'use client'
 
-import React from 'react'
-import { motion, type Variants } from 'framer-motion'
+import React, { useEffect, useRef, useState } from 'react'
 
 interface FadeInProps {
   children: React.ReactNode
@@ -15,7 +14,7 @@ interface FadeInProps {
     once?: boolean
     amount?: number
   }
-  immediate?: boolean // Don't use whileInView, animate immediately
+  immediate?: boolean // Don't use intersection observer, animate immediately
 }
 
 export function FadeIn({
@@ -29,63 +28,72 @@ export function FadeIn({
   viewport = { once: true, amount: 0.2 },
   immediate = false,
 }: FadeInProps) {
-  const getTransform = () => {
+  const [isVisible, setIsVisible] = useState(immediate)
+  const ref = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (immediate) {
+      setIsVisible(true)
+      return
+    }
+
+    const element = ref.current
+    if (!element) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true)
+            if (viewport.once) {
+              observer.unobserve(element)
+            }
+          } else if (!viewport.once) {
+            setIsVisible(false)
+          }
+        })
+      },
+      {
+        threshold: viewport.amount || 0.2,
+      },
+    )
+
+    observer.observe(element)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [immediate, viewport.once, viewport.amount])
+
+  const getInitialTransform = () => {
     switch (direction) {
       case 'up':
-        return { y: distance }
+        return `translateY(${distance}px)`
       case 'down':
-        return { y: -distance }
+        return `translateY(-${distance}px)`
       case 'left':
-        return { x: distance }
+        return `translateX(${distance}px)`
       case 'right':
-        return { x: -distance }
+        return `translateX(-${distance}px)`
       case 'none':
       default:
-        return {}
+        return 'translateY(0)'
     }
   }
 
-  const variants: Variants = {
-    hidden: {
-      opacity: 0,
-      ...getTransform(),
-      ...(scale && { scale: 0.95 }),
-    },
-    visible: {
-      opacity: 1,
-      x: 0,
-      y: 0,
-      ...(scale && { scale: 1 }),
-      transition: {
-        duration,
-        delay,
-        ease: [0, 0, 0.2, 1], // ease-out cubic bezier
-      },
-    },
-  }
-
-  if (immediate) {
-    return (
-      <motion.div
-        className={className}
-        initial="hidden"
-        animate="visible"
-        variants={variants}
-      >
-        {children}
-      </motion.div>
-    )
-  }
-
   return (
-    <motion.div
+    <div
+      ref={ref}
       className={className}
-      initial="hidden"
-      whileInView="visible"
-      viewport={viewport}
-      variants={variants}
+      style={{
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible
+          ? 'translateX(0) translateY(0) scale(1)'
+          : `${getInitialTransform()} ${scale ? 'scale(0.95)' : 'scale(1)'}`,
+        transition: `opacity ${duration}s cubic-bezier(0, 0, 0.2, 1) ${delay}s, transform ${duration}s cubic-bezier(0, 0, 0.2, 1) ${delay}s`,
+      }}
     >
       {children}
-    </motion.div>
+    </div>
   )
 }

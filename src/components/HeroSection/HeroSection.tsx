@@ -1,11 +1,15 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion } from 'framer-motion'
 
 export function HeroSection() {
+  const [isVisible, setIsVisible] = useState(false)
+
+  useEffect(() => {
+    setIsVisible(true)
+  }, [])
 
   return (
     <section className="relative min-h-[calc(100vh-80px)] flex items-center justify-center overflow-hidden bg-gradient-to-b from-white to-stone-50 py-16 md:py-20 lg:py-24 px-6 md:px-10 lg:px-16">
@@ -30,16 +34,16 @@ export function HeroSection() {
 
       <div className="relative z-20 w-full max-w-6xl text-center">
         {/* Logo - Drops in with scale and bounce */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.5, y: -30 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{
-            duration: 1,
-            delay: 0.3,
-            ease: [0.34, 1.56, 0.64, 1], // Cubic bezier for bounce
-            opacity: { duration: 0.8 },
+        <div
+          className={`
+            flex justify-center mb-8 md:mb-12
+            transition-all duration-1000
+            ${isVisible ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-50 -translate-y-8'}
+          `}
+          style={{
+            transitionTimingFunction: 'cubic-bezier(0.34, 1.56, 0.64, 1)',
+            transitionDelay: '300ms',
           }}
-          className="flex justify-center mb-8 md:mb-12"
         >
           <div className="relative w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 drop-shadow-[0_8px_32px_rgba(0,0,0,0.9)]">
             <Image
@@ -50,37 +54,49 @@ export function HeroSection() {
               priority
             />
           </div>
-        </motion.div>
+        </div>
 
         {/* Brand Name - Single line with responsive wrapping */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.1, ease: [0, 0, 0.2, 1] }}
-          className="mb-8 md:mb-10"
+        <div
+          className={`
+            mb-8 md:mb-10
+            transition-all duration-800
+            ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
+          `}
+          style={{
+            transitionTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)',
+            transitionDelay: '1100ms',
+          }}
         >
           <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tight leading-none whitespace-nowrap !text-stone-50 drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
             <span className="inline-block sm:inline">Creative</span>{' '}
             <span className="inline-block sm:inline">Productions</span>
           </h1>
-        </motion.div>
+        </div>
 
         {/* Tagline - Subtle fade in */}
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 1.6 }}
-          className="text-xl md:text-2xl lg:text-3xl font-body font-light tracking-wide mb-12 md:mb-16 !text-stone-100 drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]"
+        <p
+          className={`
+            text-xl md:text-2xl lg:text-3xl font-body font-light tracking-wide mb-12 md:mb-16 !text-stone-100 drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]
+            transition-opacity duration-800
+            ${isVisible ? 'opacity-100' : 'opacity-0'}
+          `}
+          style={{ transitionDelay: '1600ms' }}
         >
           Cinematic storytelling for brands that move people
-        </motion.p>
+        </p>
 
         {/* CTAs - Stagger in from below */}
         <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-center justify-center">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 2.0, ease: [0, 0, 0.2, 1] }}
+          <div
+            className={`
+              transition-all duration-600
+              ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
+            `}
+            style={{
+              transitionTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)',
+              transitionDelay: '2000ms',
+            }}
           >
             <Link
               href="/contact"
@@ -113,12 +129,17 @@ export function HeroSection() {
                 />
               </svg>
             </Link>
-          </motion.div>
+          </div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 2.15, ease: [0, 0, 0.2, 1] }}
+          <div
+            className={`
+              transition-all duration-600
+              ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
+            `}
+            style={{
+              transitionTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)',
+              transitionDelay: '2150ms',
+            }}
           >
             <Link
               href="/about"
@@ -138,7 +159,7 @@ export function HeroSection() {
             >
               Our Team
             </Link>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

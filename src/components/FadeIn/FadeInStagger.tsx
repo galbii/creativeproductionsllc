@@ -1,7 +1,6 @@
 'use client'
 
-import React from 'react'
-import { motion } from 'framer-motion'
+import React, { useEffect, useRef, useState } from 'react'
 
 interface FadeInStaggerProps {
   children: React.ReactNode
@@ -21,27 +20,55 @@ export function FadeInStagger({
   maxDelay = 0.6,
   viewport = { once: true, amount: 0.1 },
 }: FadeInStaggerProps) {
+  const [isVisible, setIsVisible] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
   const childrenArray = React.Children.toArray(children)
 
+  useEffect(() => {
+    const element = ref.current
+    if (!element) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true)
+            if (viewport.once) {
+              observer.unobserve(element)
+            }
+          } else if (!viewport.once) {
+            setIsVisible(false)
+          }
+        })
+      },
+      {
+        threshold: viewport.amount || 0.1,
+      },
+    )
+
+    observer.observe(element)
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [viewport.once, viewport.amount])
+
   return (
-    <div className={className}>
+    <div ref={ref} className={className}>
       {childrenArray.map((child, index) => {
         const delay = Math.min(index * staggerDelay, maxDelay)
 
         return (
-          <motion.div
+          <div
             key={index}
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={viewport}
-            transition={{
-              duration: 0.6,
-              delay,
-              ease: [0, 0, 0.2, 1],
+            style={{
+              opacity: isVisible ? 1 : 0,
+              transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
+              transition: `opacity 0.6s cubic-bezier(0, 0, 0.2, 1) ${delay}s, transform 0.6s cubic-bezier(0, 0, 0.2, 1) ${delay}s`,
             }}
           >
             {child}
-          </motion.div>
+          </div>
         )
       })}
     </div>

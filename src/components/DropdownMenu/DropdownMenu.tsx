@@ -2,7 +2,6 @@
 
 import React, { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
-import { motion, AnimatePresence } from 'framer-motion'
 
 interface DropdownItem {
   label: string
@@ -17,7 +16,18 @@ interface DropdownMenuProps {
 
 export function DropdownMenu({ trigger, items, mainHref }: DropdownMenuProps) {
   const [isOpen, setIsOpen] = useState(false)
+  const [shouldRender, setShouldRender] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
+
+  // Handle dropdown visibility with animation
+  useEffect(() => {
+    if (isOpen) {
+      setShouldRender(true)
+    } else {
+      const timer = setTimeout(() => setShouldRender(false), 200)
+      return () => clearTimeout(timer)
+    }
+  }, [isOpen])
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -78,36 +88,33 @@ export function DropdownMenu({ trigger, items, mainHref }: DropdownMenuProps) {
         </button>
       )}
 
-      <AnimatePresence>
-        {isOpen && items.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2, ease: [0, 0, 0.2, 1] }}
-            className="
-              absolute top-full left-0 mt-2 min-w-[200px]
-              bg-white border border-stone-300 rounded-lg shadow-lg
-              py-2 z-50
-            "
-          >
-            {items.map((item, index) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="
-                  block px-4 py-2 text-sm font-medium text-stone-700
-                  hover:bg-stone-100 hover:text-stone-900
-                  transition-colors duration-150
-                "
-                onClick={() => setIsOpen(false)}
-              >
-                {item.label}
-              </Link>
-            ))}
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {shouldRender && items.length > 0 && (
+        <div
+          className={`
+            absolute top-full left-0 mt-2 min-w-[200px]
+            bg-white border border-stone-300 rounded-lg shadow-lg
+            py-2 z-50
+            transition-all duration-200
+            ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}
+          `}
+          style={{ transitionTimingFunction: 'cubic-bezier(0, 0, 0.2, 1)' }}
+        >
+          {items.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="
+                block px-4 py-2 text-sm font-medium text-stone-700
+                hover:bg-stone-100 hover:text-stone-900
+                transition-colors duration-150
+              "
+              onClick={() => setIsOpen(false)}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
