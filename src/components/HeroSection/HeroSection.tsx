@@ -68,7 +68,7 @@ export function HeroSection() {
             transitionDelay: '1100ms',
           }}
         >
-          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tight leading-none whitespace-nowrap !text-stone-50 drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
+          <h1 className="font-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl font-bold tracking-tight leading-tight sm:leading-none !text-stone-50 drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
             <span className="inline-block sm:inline">Creative</span>{' '}
             <span className="inline-block sm:inline">Productions</span>
           </h1>
