@@ -27,8 +27,7 @@ export function HeroSection() {
           allow="autoplay; fullscreen; picture-in-picture"
           title="Hero Background"
         />
-        {/* Minimal bottom fade only — lets the video breathe */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+
       </div>
 
       {/* Centered content */}
@@ -40,10 +39,10 @@ export function HeroSection() {
           }`}
           style={{ transitionDelay: '200ms' }}
         >
-          <span className="inline-flex items-center gap-3 text-[11px] font-medium tracking-[0.3em] uppercase text-white/50">
-            <span className="w-6 h-px bg-white/30" />
+          <span className="inline-flex items-center gap-3 text-[11px] font-bold tracking-[0.3em] uppercase text-white">
+            <span className="w-6 h-px bg-white/60" />
             Los Angeles, CA
-            <span className="w-6 h-px bg-white/30" />
+            <span className="w-6 h-px bg-white/60" />
           </span>
         </div>
 
@@ -61,6 +60,13 @@ export function HeroSection() {
             Creative
             <br />
             <span className="text-white/75">Productions</span>
+            {' '}
+            <span
+              className="font-body font-semibold uppercase tracking-[0.28em] text-white/30"
+              style={{ fontSize: '13px' }}
+            >
+              LLC
+            </span>
           </h1>
         </div>
 
@@ -71,7 +77,7 @@ export function HeroSection() {
           }`}
           style={{ transitionDelay: '550ms' }}
         >
-          <p className="text-sm md:text-base text-white/55 font-light leading-relaxed">
+          <p className="text-base md:text-xl font-semibold leading-relaxed" style={{ color: 'white' }}>
             Cinematic storytelling for brands that move people.
           </p>
         </div>

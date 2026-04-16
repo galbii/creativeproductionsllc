@@ -77,17 +77,13 @@ export function HeaderClient({ galleryItems }: HeaderClientProps) {
             */}
             <div
               className={`
-                relative flex-shrink-0
-                transition-[width,height,transform,filter] duration-500
-                ${
-                  isScrolled
-                    ? 'w-11 h-11 translate-y-0'
-                    : 'w-[84px] h-[84px] translate-y-[22px]'
-                }
+                relative flex-shrink-0 w-[84px] h-[84px]
+                transition-[transform,filter] duration-500
+                ${isScrolled ? 'translate-y-[12px]' : 'translate-y-[22px]'}
               `}
               style={{
                 filter: isScrolled
-                  ? 'drop-shadow(0 2px 6px rgba(0,0,0,0.15))'
+                  ? 'drop-shadow(0 4px 14px rgba(0,0,0,0.18))'
                   : 'drop-shadow(0 8px 24px rgba(0,0,0,0.22)) drop-shadow(0 2px 6px rgba(194,112,93,0.18))',
                 transitionTimingFunction: 'cubic-bezier(0.34,1.46,0.64,1)',
               }}
@@ -116,6 +112,9 @@ export function HeaderClient({ galleryItems }: HeaderClientProps) {
                 }`}
               >
                 Productions
+              </span>
+              <span className="font-body font-semibold uppercase tracking-[0.28em] text-stone-400/50 mt-[3px] text-[8px]">
+                LLC
               </span>
             </div>
           </Link>
