@@ -24,16 +24,16 @@ export function HeroVideoCarousel({ videos }: HeroVideoCarouselProps) {
 
       if (e.key === 'ArrowLeft') {
         e.preventDefault()
-        handlePrevious()
+        setSelectedIndex((prev) => (prev - 1 + videos.length) % videos.length)
       } else if (e.key === 'ArrowRight') {
         e.preventDefault()
-        handleNext()
+        setSelectedIndex((prev) => (prev + 1) % videos.length)
       }
     }
 
     window.addEventListener('keydown', handleKeyDown)
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [selectedIndex, videos.length, isModalOpen])
+  }, [videos.length, isModalOpen])
 
   const handleNext = () => {
     setSelectedIndex((prev) => (prev + 1) % videos.length)

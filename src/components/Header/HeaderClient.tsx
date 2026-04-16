@@ -20,25 +20,20 @@ export function HeaderClient({ galleryItems }: HeaderClientProps) {
   const [isVisible, setIsVisible] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20)
-    }
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 30)
     window.addEventListener('scroll', handleScroll)
-    return () => removeEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
-  // Trigger initial animation on mount
   useEffect(() => {
-    setIsVisible(true)
+    const t = setTimeout(() => setIsVisible(true), 40)
+    return () => clearTimeout(t)
   }, [])
 
-  // Close mobile menu when clicking outside or on a link
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'unset'
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
     }
   }, [isMobileMenuOpen])
 
@@ -51,123 +46,190 @@ export function HeaderClient({ galleryItems }: HeaderClientProps) {
   return (
     <>
       <header
-        className={`sticky top-0 z-50 w-full transition-all duration-300 ${
-          isScrolled
-            ? 'bg-stone-300/90 backdrop-blur-xl border-b border-stone-400 shadow-sm'
-            : 'bg-stone-300'
-        } ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}
-        style={{ transition: 'opacity 0.4s ease-out, transform 0.4s ease-out' }}
+        className={`
+          sticky top-0 z-50 w-full overflow-visible
+          transition-all duration-500
+          ${isScrolled ? 'bg-stone-200/93 backdrop-blur-2xl' : 'bg-stone-200'}
+          ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-1'}
+        `}
       >
-        <div className="max-w-7xl mx-auto flex justify-between items-center px-6 lg:px-16 h-20">
-          {/* Logo - Crest only on mobile, with text on desktop */}
+        {/* Terracotta top accent — fades slightly when scrolled */}
+        <div
+          className={`h-[2px] w-full transition-opacity duration-500 ${isScrolled ? 'opacity-40' : 'opacity-80'}`}
+          style={{
+            background:
+              'linear-gradient(90deg, transparent 0%, #c2705d 25%, #c2705d 75%, transparent 100%)',
+          }}
+        />
+
+        {/* Inner bar */}
+        <div className="overflow-visible max-w-7xl mx-auto flex items-center justify-between px-6 lg:px-16 h-16">
+          {/* ── Logo medallion ── */}
           <Link
             href="/"
-            className="flex items-center gap-3 transition-opacity hover:opacity-80 relative z-10"
+            className="relative z-10 flex items-center gap-4 group flex-shrink-0 hover:opacity-100"
           >
-            <div className="relative w-16 h-16 lg:w-20 lg:h-20">
+            {/*
+              The medallion overhangs below the bar.
+              In the resting state it's 84px and translated down 24px,
+              so ~32px of it extends below the 64px bar.
+              On scroll it snaps to 44px with no translate.
+            */}
+            <div
+              className={`
+                relative flex-shrink-0
+                transition-[width,height,transform,filter] duration-500
+                ${
+                  isScrolled
+                    ? 'w-11 h-11 translate-y-0'
+                    : 'w-[84px] h-[84px] translate-y-[22px]'
+                }
+              `}
+              style={{
+                filter: isScrolled
+                  ? 'drop-shadow(0 2px 6px rgba(0,0,0,0.15))'
+                  : 'drop-shadow(0 8px 24px rgba(0,0,0,0.22)) drop-shadow(0 2px 6px rgba(194,112,93,0.18))',
+                transitionTimingFunction: 'cubic-bezier(0.34,1.46,0.64,1)',
+              }}
+            >
               <Image
                 src="/images/dropbox/creative productionscrest.jpg"
                 alt="Creative Productions Logo"
                 fill
-                className="object-contain drop-shadow-md"
+                className="object-contain"
                 priority
               />
             </div>
-            {/* Hide text on mobile, show on lg and up */}
-            <span className="hidden lg:inline font-display text-lg font-semibold text-stone-900 tracking-wide">
-              Creative Productions LLC
-            </span>
+
+            {/* Wordmark — desktop only */}
+            <div className="hidden xl:flex flex-col leading-[0.88] tracking-[-0.03em]">
+              <span
+                className={`font-display font-bold transition-all duration-300 ${
+                  isScrolled ? 'text-[13px] text-stone-900' : 'text-sm text-stone-900'
+                }`}
+              >
+                Creative
+              </span>
+              <span
+                className={`font-display font-bold transition-all duration-300 ${
+                  isScrolled ? 'text-[13px] text-stone-900/60' : 'text-sm text-stone-900/60'
+                }`}
+              >
+                Productions
+              </span>
+            </div>
           </Link>
 
-          {/* Desktop Navigation - hidden on mobile */}
-          <nav className="hidden lg:flex items-center gap-6 lg:gap-8">
+          {/* ── Desktop Navigation ── */}
+          <nav className="hidden lg:flex items-center gap-7 xl:gap-9">
             {navLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="font-body text-base font-medium text-stone-600 tracking-wide relative transition-colors hover:text-stone-900 after:absolute after:bottom-[-4px] after:left-0 after:w-0 after:h-[1px] after:bg-stone-900 after:transition-all after:duration-200 hover:after:w-full"
+                className="
+                  font-body text-[10.5px] font-semibold uppercase tracking-[0.18em]
+                  text-stone-500 relative transition-colors duration-200
+                  hover:text-[#c2705d]
+                  after:absolute after:bottom-[-3px] after:left-0
+                  after:h-px after:w-0 after:bg-[#c2705d]
+                  after:transition-all after:duration-300 after:ease-out
+                  hover:after:w-full
+                "
               >
                 {link.label}
               </Link>
             ))}
 
-            {/* Gallery Dropdown */}
             <DropdownMenu trigger="Gallery" items={galleryItems} mainHref="/gallery" />
           </nav>
 
-          {/* Mobile Burger Menu Button */}
+          {/* ── Mobile hamburger ── */}
           <button
-            className="lg:hidden relative z-50 w-10 h-10 flex flex-col justify-center items-center gap-1.5 group"
+            className="lg:hidden relative z-50 w-10 h-10 flex flex-col justify-center items-end gap-[6px] group"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label="Toggle menu"
             aria-expanded={isMobileMenuOpen}
           >
+            {/* Top bar */}
             <span
-              className={`w-6 h-0.5 bg-stone-900 rounded-full transition-all duration-300 ease-in-out ${
-                isMobileMenuOpen ? 'rotate-45 translate-y-2' : 'rotate-0 translate-y-0 group-hover:w-7'
+              className={`block h-px bg-stone-800 rounded-full transition-all duration-300 ${
+                isMobileMenuOpen ? 'w-6 rotate-45 translate-y-[9px]' : 'w-6'
               }`}
             />
+            {/* Middle bar — terracotta accent, shorter */}
             <span
-              className={`w-6 h-0.5 bg-stone-900 rounded-full transition-all duration-300 ease-in-out ${
-                isMobileMenuOpen ? 'opacity-0 scale-0' : 'opacity-100 scale-100'
+              className={`block h-px rounded-full transition-all duration-300 ${
+                isMobileMenuOpen
+                  ? 'w-0 opacity-0 bg-stone-400'
+                  : 'w-[14px] opacity-100 bg-[#c2705d] group-hover:w-6'
               }`}
             />
+            {/* Bottom bar */}
             <span
-              className={`w-6 h-0.5 bg-stone-900 rounded-full transition-all duration-300 ease-in-out ${
-                isMobileMenuOpen ? '-rotate-45 -translate-y-2' : 'rotate-0 translate-y-0 group-hover:w-7'
+              className={`block h-px bg-stone-800 rounded-full transition-all duration-300 ${
+                isMobileMenuOpen ? 'w-6 -rotate-45 -translate-y-[9px]' : 'w-6'
               }`}
             />
           </button>
         </div>
+
+        {/* Bottom rule — fades out when scrolled (blur handles separation) */}
+        <div
+          className={`h-px w-full transition-opacity duration-300 ${isScrolled ? 'opacity-30' : 'opacity-60'}`}
+          style={{
+            background:
+              'linear-gradient(90deg, transparent 0%, #a8a29e 20%, #a8a29e 80%, transparent 100%)',
+          }}
+        />
       </header>
 
-      {/* Mobile Menu Dropdown */}
+      {/* ── Mobile slide panel ── */}
       {isMobileMenuOpen && (
         <>
           {/* Backdrop */}
           <div
-            className="fixed inset-0 bg-stone-900/50 z-40 lg:hidden transition-opacity duration-500 ease-out animate-fade-in"
+            className="fixed inset-0 bg-stone-900/45 backdrop-blur-[2px] z-40 animate-backdrop-in"
             onClick={() => setIsMobileMenuOpen(false)}
           />
 
-          {/* Menu Panel */}
-          <nav className="fixed top-20 right-0 bottom-0 w-[75%] max-w-sm bg-stone-200 z-40 lg:hidden shadow-2xl border-l border-stone-400 overflow-y-auto animate-slide-in-right">
-            <div className="flex flex-col p-8 gap-6">
-              {navLinks.map((link, index) => (
-                <div
+          {/* Panel */}
+          <nav
+            className="fixed top-[68px] right-0 bottom-0 w-[78%] max-w-[300px] z-50 overflow-y-auto shadow-2xl border-l border-stone-300/70 animate-panel-in"
+            style={{ background: 'linear-gradient(160deg, #e7e5e4 0%, #d6d3d1 100%)' }}
+          >
+            {/* Panel top accent */}
+            <div className="h-[2px] opacity-60" style={{ background: '#c2705d' }} />
+
+            <div className="flex flex-col px-8 py-10 gap-0">
+              {navLinks.map((link, i) => (
+                <Link
                   key={link.href}
-                  className="animate-slide-in"
-                  style={{
-                    animationDelay: `${index * 100}ms`,
-                    animationFillMode: 'both',
-                  }}
+                  href={link.href}
+                  className="mobile-link font-body text-[10.5px] font-semibold uppercase tracking-[0.22em] text-stone-600 block py-[14px] border-b border-stone-300/50 hover:text-[#c2705d] transition-colors"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  style={{ animationDelay: `${i * 55}ms` }}
                 >
-                  <Link
-                    href={link.href}
-                    className="font-body text-xl font-medium text-stone-900 block py-3 px-4 rounded-lg transition-colors hover:bg-stone-300"
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {link.label}
-                  </Link>
-                </div>
+                  {link.label}
+                </Link>
               ))}
 
-              {/* Gallery Section in Mobile Menu */}
-              <div className="border-t border-stone-400 pt-4 mt-2">
+              {/* Gallery group */}
+              <div>
                 <Link
                   href="/gallery"
-                  className="font-body text-xl font-medium text-stone-900 block py-3 px-4 rounded-lg transition-colors hover:bg-stone-300 mb-2"
+                  className="mobile-link font-body text-[10.5px] font-semibold uppercase tracking-[0.22em] text-stone-600 block py-[14px] border-b border-stone-300/50 hover:text-[#c2705d] transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
+                  style={{ animationDelay: `${navLinks.length * 55}ms` }}
                 >
                   Gallery
                 </Link>
                 {galleryItems.length > 0 && (
-                  <div className="pl-4 flex flex-col gap-2">
-                    {galleryItems.map((item, index) => (
+                  <div className="pl-3 flex flex-col">
+                    {galleryItems.map((item) => (
                       <Link
                         key={item.href}
                         href={item.href}
-                        className="font-body text-base font-medium text-stone-700 block py-2 px-4 rounded-lg transition-colors hover:bg-stone-300"
+                        className="font-body text-[9.5px] uppercase tracking-[0.18em] text-stone-400 block py-[10px] border-b border-stone-200/50 hover:text-[#c2705d] transition-colors"
                         onClick={() => setIsMobileMenuOpen(false)}
                       >
                         {item.label}
@@ -182,7 +244,7 @@ export function HeaderClient({ galleryItems }: HeaderClientProps) {
       )}
 
       <style jsx>{`
-        @keyframes fade-in {
+        @keyframes backdrop-in {
           from {
             opacity: 0;
           }
@@ -190,22 +252,18 @@ export function HeaderClient({ galleryItems }: HeaderClientProps) {
             opacity: 1;
           }
         }
-
-        @keyframes slide-in-right {
+        @keyframes panel-in {
           from {
             transform: translateX(100%);
-            opacity: 0;
           }
           to {
             transform: translateX(0);
-            opacity: 1;
           }
         }
-
-        @keyframes slide-in {
+        @keyframes link-in {
           from {
             opacity: 0;
-            transform: translateX(20px);
+            transform: translateX(12px);
           }
           to {
             opacity: 1;
@@ -213,16 +271,14 @@ export function HeaderClient({ galleryItems }: HeaderClientProps) {
           }
         }
 
-        .animate-fade-in {
-          animation: fade-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        .animate-backdrop-in {
+          animation: backdrop-in 0.25s ease-out forwards;
         }
-
-        .animate-slide-in-right {
-          animation: slide-in-right 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        .animate-panel-in {
+          animation: panel-in 0.42s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
-
-        .animate-slide-in {
-          animation: slide-in 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        .mobile-link {
+          animation: link-in 0.35s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
       `}</style>
     </>
